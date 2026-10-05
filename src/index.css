@@ -1,0 +1,436 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-darkroom-bg: #09090b;
+    --color-safelight: #ff2a2a;
+    --color-chemical: #121014;
+    --font-cinzel: 'Cinzel', serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --font-sans: 'Plus Jakarta Sans', sans-serif;
+    --font-editorial: 'Playfair Display', Georgia, serif;
+    --font-handwritten: 'Caveat', cursive;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: #08080a;
+    color: #e2e2e8;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+}
+
+/* Custom Film Grain Overlay */
+.film-grain {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+}
+
+/* Darkroom Red Atmospheric Mode */
+.mode-darkroom {
+  --glow-color: rgba(255, 30, 30, 0.4);
+  box-shadow: inset 0 0 120px rgba(255, 10, 10, 0.15);
+}
+
+/* Glass Optical Loupe */
+.loupe-lens {
+  box-shadow: 
+    0 0 0 2px rgba(255, 255, 255, 0.2),
+    0 20px 40px -10px rgba(0, 0, 0, 0.8),
+    inset 0 0 20px rgba(255, 255, 255, 0.25),
+    inset 0 0 50px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(0px);
+}
+
+/* Rangefinder Split Masking */
+.split-top {
+  clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+}
+.split-bottom {
+  clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);
+}
+
+/* Smooth custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #09090c;
+}
+::-webkit-scrollbar-thumb {
+  background: #272730;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3f3f4e;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.8; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.03); }
+}
+
+.safelight-pulse {
+  animation: pulseGlow 4s ease-in-out infinite;
+}
+
+/* Authentic Album Physical Textures & Details */
+.font-handwritten {
+  font-family: var(--font-handwritten);
+}
+
+.font-editorial {
+  font-family: var(--font-editorial);
+}
+
+.font-cinzel {
+  font-family: var(--font-cinzel);
+}
+
+/* Archival Leather / Bookbinding Cloth Exterior */
+.album-hardcover {
+  background: radial-gradient(circle at 50% 30%, #1e1916 0%, #120e0d 60%, #0a0807 100%);
+  box-shadow: 
+    0 30px 80px -20px rgba(0, 0, 0, 0.95),
+    0 10px 30px -10px rgba(0, 0, 0, 0.8),
+    inset 0 1px 1px rgba(255, 255, 255, 0.08),
+    inset 0 -2px 6px rgba(0, 0, 0, 0.8);
+}
+
+/* Heavyweight Warm Cardstock Archival Paper */
+.album-page-cream {
+  background-color: #f6f1e8;
+  background-image: 
+    radial-gradient(#e4dbca 0.75px, transparent 0.75px),
+    radial-gradient(#d8ceba 0.75px, #f6f1e8 0.75px);
+  background-size: 30px 30px;
+  background-position: 0 0, 15px 15px;
+}
+
+/* Book Spine Center Gutter Shadow */
+.album-gutter-shadow {
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.35) 0%,
+    rgba(0, 0, 0, 0.12) 15%,
+    rgba(0, 0, 0, 0) 50%,
+    rgba(0, 0, 0, 0.12) 85%,
+    rgba(0, 0, 0, 0.35) 100%
+  );
+}
+
+/* Physical Photo Mounted Drop Shadow */
+.photo-mount-shadow {
+  box-shadow: 
+    0 8px 24px -4px rgba(20, 15, 10, 0.38),
+    0 2px 6px -1px rgba(20, 15, 10, 0.22),
+    0 0 0 1px rgba(255, 255, 255, 0.9);
+}
+
+/* Archival Corner Mounting Tabs (Black Vintage Photo Corners) */
+.mount-corner-tl {
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  width: 18px;
+  height: 18px;
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+  background: linear-gradient(135deg, #2b2622 0%, #151210 100%);
+  box-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+  z-index: 20;
+}
+
+.mount-corner-tr {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 18px;
+  height: 18px;
+  clip-path: polygon(0 0, 100% 0, 100% 100%);
+  background: linear-gradient(225deg, #2b2622 0%, #151210 100%);
+  box-shadow: -1px 1px 2px rgba(0,0,0,0.4);
+  z-index: 20;
+}
+
+.mount-corner-bl {
+  position: absolute;
+  bottom: -4px;
+  left: -4px;
+  width: 18px;
+  height: 18px;
+  clip-path: polygon(0 0, 0 100%, 100% 100%);
+  background: linear-gradient(45deg, #2b2622 0%, #151210 100%);
+  box-shadow: 1px -1px 2px rgba(0,0,0,0.4);
+  z-index: 20;
+}
+
+.mount-corner-br {
+  position: absolute;
+  bottom: -4px;
+  right: -4px;
+  width: 18px;
+  height: 18px;
+  clip-path: polygon(100% 0, 0 100%, 100% 100%);
+  background: linear-gradient(315deg, #2b2622 0%, #151210 100%);
+  box-shadow: -1px -1px 2px rgba(0,0,0,0.4);
+  z-index: 20;
+}
+
+/* 3D Page Turn Mechanics */
+.perspective-book {
+  perspective: 2800px;
+  perspective-origin: 50% 50%;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.origin-left-spine {
+  transform-origin: left center;
+}
+
+.origin-right-spine {
+  transform-origin: right center;
+}
+
+/* Real-Paper Diagonal Corner Peel & Arching Curvature Mechanics */
+@keyframes realPaperFlipForward {
+  0% {
+    transform: rotateY(0deg) rotateZ(0deg) skewY(0deg) scaleX(1) translateY(0);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-bottom-right-radius: 0px;
+  }
+  16% {
+    /* Corner peels up diagonally from bottom-right */
+    transform: rotateY(-28deg) rotateZ(5.5deg) skewY(-4.2deg) scaleX(0.96) translateY(-8px);
+    box-shadow: -18px 16px 36px rgba(0, 0, 0, 0.32);
+    border-bottom-right-radius: 56px;
+  }
+  38% {
+    /* Cylindrical paper arch curling over the spine */
+    transform: rotateY(-74deg) rotateZ(6.5deg) skewY(-5.5deg) scaleX(0.91) translateY(-14px);
+    box-shadow: -38px 26px 70px rgba(0, 0, 0, 0.45);
+    border-bottom-right-radius: 20px;
+  }
+  60% {
+    /* Descending arch past spine */
+    transform: rotateY(-118deg) rotateZ(1.8deg) skewY(-1.8deg) scaleX(0.91) translateY(-10px);
+    box-shadow: -42px 24px 68px rgba(0, 0, 0, 0.4);
+    border-bottom-left-radius: 20px;
+  }
+  80% {
+    /* Paper unrolling smoothly down towards left stack */
+    transform: rotateY(-156deg) rotateZ(-4deg) skewY(3.5deg) scaleX(0.95) translateY(-4px);
+    box-shadow: -24px 15px 48px rgba(0, 0, 0, 0.28);
+    border-bottom-left-radius: 50px;
+  }
+  94% {
+    /* Soft landing cushion */
+    transform: rotateY(-181.5deg) rotateZ(-0.5deg) skewY(0.4deg) scaleX(0.995) translateY(0);
+    box-shadow: -8px 6px 18px rgba(0, 0, 0, 0.16);
+    border-bottom-left-radius: 8px;
+  }
+  100% {
+    transform: rotateY(-180deg) rotateZ(0deg) skewY(0deg) scaleX(1) translateY(0);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-radius: 0;
+  }
+}
+
+.animate-page-flip-forward {
+  animation: realPaperFlipForward 0.95s cubic-bezier(0.24, 0.08, 0.2, 1) forwards;
+}
+
+@keyframes realPaperFlipBackward {
+  0% {
+    transform: rotateY(0deg) rotateZ(0deg) skewY(0deg) scaleX(1) translateY(0);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-bottom-left-radius: 0px;
+  }
+  16% {
+    /* Corner peels up diagonally from bottom-left */
+    transform: rotateY(28deg) rotateZ(-5.5deg) skewY(4.2deg) scaleX(0.96) translateY(-8px);
+    box-shadow: 18px 16px 36px rgba(0, 0, 0, 0.32);
+    border-bottom-left-radius: 56px;
+  }
+  38% {
+    /* Cylindrical paper arch curling over the spine */
+    transform: rotateY(74deg) rotateZ(-6.5deg) skewY(5.5deg) scaleX(0.91) translateY(-14px);
+    box-shadow: 38px 26px 70px rgba(0, 0, 0, 0.45);
+    border-bottom-left-radius: 20px;
+  }
+  60% {
+    /* Descending arch past spine */
+    transform: rotateY(118deg) rotateZ(-1.8deg) skewY(1.8deg) scaleX(0.91) translateY(-10px);
+    box-shadow: 42px 24px 68px rgba(0, 0, 0, 0.4);
+    border-bottom-right-radius: 20px;
+  }
+  80% {
+    /* Paper unrolling smoothly down towards right stack */
+    transform: rotateY(156deg) rotateZ(4deg) skewY(-3.5deg) scaleX(0.95) translateY(-4px);
+    box-shadow: 24px 15px 48px rgba(0, 0, 0, 0.28);
+    border-bottom-right-radius: 50px;
+  }
+  94% {
+    /* Soft landing cushion */
+    transform: rotateY(181.5deg) rotateZ(0.5deg) skewY(-0.4deg) scaleX(0.995) translateY(0);
+    box-shadow: 8px 6px 18px rgba(0, 0, 0, 0.16);
+    border-bottom-right-radius: 8px;
+  }
+  100% {
+    transform: rotateY(180deg) rotateZ(0deg) skewY(0deg) scaleX(1) translateY(0);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-radius: 0;
+  }
+}
+
+.animate-page-flip-backward {
+  animation: realPaperFlipBackward 0.95s cubic-bezier(0.24, 0.08, 0.2, 1) forwards;
+}
+
+/* Dynamic Cylindrical Highlight across Arching Paper */
+@keyframes cylinderShineForward {
+  0% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  35% {
+    opacity: 0.45;
+    transform: translateX(25%);
+  }
+  65% {
+    opacity: 0.55;
+    transform: translateX(-35%);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+}
+
+.animate-cylinder-shine-forward {
+  animation: cylinderShineForward 0.94s ease-in-out forwards;
+}
+
+@keyframes cylinderShineBackward {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  35% {
+    opacity: 0.45;
+    transform: translateX(-25%);
+  }
+  65% {
+    opacity: 0.55;
+    transform: translateX(35%);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+.animate-cylinder-shine-backward {
+  animation: cylinderShineBackward 0.94s ease-in-out forwards;
+}
+
+/* Dynamic Page Landing Cast Shadow */
+@keyframes landingShadow {
+  0% {
+    opacity: 0;
+    transform: scaleX(0.6);
+  }
+  45% {
+    opacity: 0.65;
+    transform: scaleX(1);
+  }
+  85% {
+    opacity: 0.25;
+    transform: scaleX(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scaleX(1);
+  }
+}
+
+.animate-landing-shadow {
+  animation: landingShadow 0.94s ease-in-out forwards;
+}
+
+/* Uncovering Light Sweep (page being revealed) */
+@keyframes uncoverReveal {
+  0% {
+    opacity: 0.5;
+  }
+  40% {
+    opacity: 0.2;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.animate-uncover-reveal {
+  animation: uncoverReveal 0.94s ease-out forwards;
+}
+
+/* Corner Dog-Ear Curl on Page Corners */
+.page-corner-curl {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  cursor: pointer;
+  z-index: 40;
+}
+
+.page-corner-curl-br {
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(135deg, transparent 50%, #e0d4c1 50%, #cdbfab 100%);
+  border-top-left-radius: 4px;
+  box-shadow: -2px -2px 6px rgba(0, 0, 0, 0.18);
+}
+
+.page-corner-curl-br:hover {
+  width: 64px;
+  height: 64px;
+  box-shadow: -5px -5px 14px rgba(0, 0, 0, 0.35);
+}
+
+.page-corner-curl-bl {
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(225deg, transparent 50%, #e0d4c1 50%, #cdbfab 100%);
+  border-top-right-radius: 4px;
+  box-shadow: 2px -2px 6px rgba(0, 0, 0, 0.18);
+}
+
+.page-corner-curl-bl:hover {
+  width: 64px;
+  height: 64px;
+  box-shadow: 5px -5px 14px rgba(0, 0, 0, 0.35);
+}
+
+/* PageFlip Canvas & Soft Paper Styles */
+.stf__parent {
+  margin: 0 auto !important;
+}
+
+.album-page-leaf {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+
