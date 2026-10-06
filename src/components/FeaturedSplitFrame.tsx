@@ -182,10 +182,6 @@ export const FeaturedSplitFrame: React.FC<FeaturedSplitFrameProps> = ({ onSelect
                 loading="eager"
               />
 
-              {/* Watermark Archival Registration Code */}
-              <div className="absolute bottom-4 left-4 font-mono text-[9px] sm:text-[10px] tracking-widest text-white/60 uppercase bg-black/80 backdrop-blur-md px-2.5 py-1 rounded border border-white/10 pointer-events-none max-w-[80%] truncate">
-                REG #{String(currentSpecimen.order).padStart(2, '0')} · 35MM ARCHIVE
-              </div>
 
               {/* Fullscreen Expand Action Trigger */}
               <button

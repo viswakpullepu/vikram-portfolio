@@ -132,10 +132,6 @@ export const UserPhotoModal: React.FC<UserPhotoModalProps> = ({
             </button>
           )}
 
-          {/* Registration stamp */}
-          <div className="absolute bottom-2 left-3 font-mono text-[9px] sm:text-[10px] text-white/50 uppercase bg-black/80 px-2.5 py-0.5 rounded border border-white/10 max-w-[70%] truncate">
-            SPECIMEN #{String(photo.order).padStart(2, '0')} · DARKROOM ARCHIVE
-          </div>
         </div>
 
         {/* Right Section: Specimen Story, Reasons & Optics */}

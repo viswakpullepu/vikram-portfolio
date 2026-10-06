@@ -70,17 +70,6 @@ export function App() {
             </div>
           </div>
 
-          <div className="flex items-center justify-center md:justify-end gap-5 text-xs font-mono text-neutral-400">
-            <div className="text-center md:text-right">
-              <span className="text-white text-xl font-bold block">10</span>
-              <span className="uppercase text-[9px] sm:text-[10px] tracking-wider text-neutral-400">Top Curated Frames</span>
-            </div>
-            <div className="h-7 sm:h-8 w-[1px] bg-neutral-800" />
-            <div className="text-center md:text-right">
-              <span className="text-amber-400 text-xl font-bold block">35mm</span>
-              <span className="uppercase text-[9px] sm:text-[10px] tracking-wider text-neutral-400">Optical Ratio</span>
-            </div>
-          </div>
         </section>
 
         {/* REFINED SPLIT FRAME ARCHIVE EXHIBITION */}
@@ -107,7 +96,7 @@ export function App() {
           <div className="space-y-1 text-center md:text-left">
             <p className="text-white font-medium">© 2026 VIKRAM · UNFILTERED ARCHIVES</p>
             <p className="text-neutral-500 text-[11px]">
-              35mm Optical Studies & Visual Rationale Documentation
+              Photographic Works & Visual Archive
             </p>
           </div>
 
