@@ -1,17 +1,14 @@
 import { useState } from 'react';
-import type { FeaturedPhoto, AlbumPhoto } from './data/userPhotosData';
-import { TOP_30_FEATURED } from './data/userPhotosData';
+import type { SplitFrameSpecimen } from './data/splitFrameData';
+import { SPLIT_FRAME_SPECIMENS } from './data/splitFrameData';
 import { Navigation } from './components/Navigation';
 import { FeaturedSplitFrame } from './components/FeaturedSplitFrame';
-import { RealLifePhotoAlbum } from './components/RealLifePhotoAlbum';
 import { UserPhotoModal } from './components/UserPhotoModal';
 import { ContactModal } from './components/ContactModal';
 import { sound } from './utils/audio';
 
-type InspectablePhoto = (FeaturedPhoto & { isAlbum?: false }) | (AlbumPhoto & { isAlbum: true });
-
 export function App() {
-  const [selectedPhoto, setSelectedPhoto] = useState<InspectablePhoto | null>(null);
+  const [selectedSpecimen, setSelectedSpecimen] = useState<SplitFrameSpecimen | null>(null);
   const [isMuted, setIsMuted] = useState<boolean>(sound.getMuted());
   const [isContactOpen, setIsContactOpen] = useState<boolean>(false);
 
@@ -20,26 +17,22 @@ export function App() {
     setIsMuted(muted);
   };
 
-  // Next/Prev navigation when inspecting in modal
+  // Next / Prev navigation when inspecting in darkroom modal
   const handleModalNext = () => {
-    if (!selectedPhoto) return;
-    if (!('isAlbum' in selectedPhoto) || !selectedPhoto.isAlbum) {
-      const idx = TOP_30_FEATURED.findIndex((p) => p.id === selectedPhoto.id);
-      if (idx !== -1) {
-        const nextIdx = (idx + 1) % TOP_30_FEATURED.length;
-        setSelectedPhoto(TOP_30_FEATURED[nextIdx]);
-      }
+    if (!selectedSpecimen) return;
+    const idx = SPLIT_FRAME_SPECIMENS.findIndex((s) => s.id === selectedSpecimen.id);
+    if (idx !== -1) {
+      const nextIdx = (idx + 1) % SPLIT_FRAME_SPECIMENS.length;
+      setSelectedSpecimen(SPLIT_FRAME_SPECIMENS[nextIdx]);
     }
   };
 
   const handleModalPrev = () => {
-    if (!selectedPhoto) return;
-    if (!('isAlbum' in selectedPhoto) || !selectedPhoto.isAlbum) {
-      const idx = TOP_30_FEATURED.findIndex((p) => p.id === selectedPhoto.id);
-      if (idx !== -1) {
-        const prevIdx = (idx - 1 + TOP_30_FEATURED.length) % TOP_30_FEATURED.length;
-        setSelectedPhoto(TOP_30_FEATURED[prevIdx]);
-      }
+    if (!selectedSpecimen) return;
+    const idx = SPLIT_FRAME_SPECIMENS.findIndex((s) => s.id === selectedSpecimen.id);
+    if (idx !== -1) {
+      const prevIdx = (idx - 1 + SPLIT_FRAME_SPECIMENS.length) % SPLIT_FRAME_SPECIMENS.length;
+      setSelectedSpecimen(SPLIT_FRAME_SPECIMENS[prevIdx]);
     }
   };
 
@@ -57,14 +50,14 @@ export function App() {
       />
 
       {/* Main Photographic Presentation */}
-      <main className="flex-1 w-full pb-20">
+      <main className="flex-1 w-full pb-16">
         
-        {/* Prominent Editorial Header Introduction at the Starting */}
+        {/* Prominent Editorial Header Introduction */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-10 pb-6 sm:pb-8 text-center md:text-left flex flex-col md:flex-row md:items-end justify-between border-b border-neutral-900 gap-6">
           <div className="space-y-3">
             <div className="flex items-center justify-center md:justify-start gap-2 font-mono text-[11px] sm:text-xs text-neutral-400 uppercase tracking-widest">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-              <span>Photographic Archives · 74 Raw Captures</span>
+              <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+              <span>Photographic Archives · Top 10 Specimen Split Frames</span>
             </div>
             
             <h1 className="text-4xl sm:text-6xl lg:text-7xl font-light text-white font-editorial tracking-tight">
@@ -72,10 +65,10 @@ export function App() {
             </h1>
 
             <p className="text-neutral-300 text-xs sm:text-sm md:text-base font-sans max-w-2xl font-light leading-relaxed">
-              An unvarnished visual study of Indian streets, fleeting golden angles, raw CCD nocturnes, and unposed human warmth. Curated into 30 premier specimen split frames and an archival 44-print physical album.
+              An unvarnished visual study of fleeting golden angles, street candids, and intimate nocturnes. Formatted into the Top 10 premier specimen split frames pairing visual specimens with personal rationale.
             </p>
 
-            {/* Quick Instagram & Stats Link Badge */}
+            {/* Quick Instagram Badge */}
             <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 pt-1">
               <a
                 href="https://www.instagram.com/rigzz.iii/"
@@ -93,71 +86,50 @@ export function App() {
             </div>
           </div>
 
-          <div className="flex items-center justify-center md:justify-end gap-5 sm:gap-6 text-xs font-mono text-neutral-400">
+          <div className="flex items-center justify-center md:justify-end gap-5 text-xs font-mono text-neutral-400">
             <div className="text-center md:text-right">
-              <span className="text-white text-lg sm:text-xl font-bold block">30</span>
-              <span className="uppercase text-[9px] sm:text-[10px] tracking-wider text-neutral-400">Curated Split Frames</span>
+              <span className="text-white text-xl font-bold block">10</span>
+              <span className="uppercase text-[9px] sm:text-[10px] tracking-wider text-neutral-400">Top Curated Frames</span>
             </div>
             <div className="h-7 sm:h-8 w-[1px] bg-neutral-800" />
             <div className="text-center md:text-right">
-              <span className="text-white text-lg sm:text-xl font-bold block">44</span>
-              <span className="uppercase text-[9px] sm:text-[10px] tracking-wider text-neutral-400">Mounted Album Prints</span>
+              <span className="text-amber-400 text-xl font-bold block">35mm</span>
+              <span className="uppercase text-[9px] sm:text-[10px] tracking-wider text-neutral-400">Optical Ratio</span>
             </div>
           </div>
         </section>
 
-        {/* SECTION 1: TOP 30 RECTANGULAR SPLIT FRAME */}
-        {/* Left inner frame = Picture, Right inner frame = Why I took the pic & backstory */}
+        {/* REFINED SPLIT FRAME ARCHIVE EXHIBITION */}
+        {/* Left inner frame = Picture, Right inner frame = Why I took the pic & documentation */}
         <div id="split-frame" className="scroll-mt-20">
           <FeaturedSplitFrame
-            onSelectPhotoModal={(photo) => setSelectedPhoto(photo)}
-          />
-        </div>
-
-        {/* Section Divider: Transition from Exhibition Wall to Physical Library Desk */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-8 sm:my-12">
-          <div className="relative flex items-center justify-center">
-            <div className="w-full border-t border-neutral-800/80" />
-            <div className="absolute bg-[#08080a] px-4 sm:px-6 py-1.5 sm:py-2 border border-neutral-800 rounded-full font-mono text-[10px] sm:text-[11px] text-neutral-400 uppercase tracking-widest flex items-center gap-2 text-center">
-              <svg className="w-3.5 h-3.5 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-              </svg>
-              <span>Library Archive Table · Field Album Below</span>
-            </div>
-          </div>
-        </div>
-
-        {/* SECTION 2: REAL-LIFE PHOTO ALBUM (REMAINING 44 PHOTOS) */}
-        {/* Physical album binder, 2-page spreads, archival corner tabs, pencil notes, turning sound */}
-        <div id="photo-album" className="scroll-mt-20">
-          <RealLifePhotoAlbum
-            onInspectPhoto={(photo) => setSelectedPhoto({ ...photo, isAlbum: true })}
+            onSelectPhotoModal={(specimen) => setSelectedSpecimen(specimen)}
           />
         </div>
 
       </main>
 
-      {/* Fullscreen Darkroom Inspection Modal */}
+      {/* Fullscreen Darkroom Inspection Lightbox Modal */}
       <UserPhotoModal
-        photo={selectedPhoto}
-        onClose={() => setSelectedPhoto(null)}
+        photo={selectedSpecimen}
+        onClose={() => setSelectedSpecimen(null)}
         onNext={handleModalNext}
         onPrev={handleModalPrev}
       />
 
-      {/* Direct Contact / Commission Modal */}
+      {/* Direct Contact & Commission Modal */}
       <ContactModal
         isOpen={isContactOpen}
         onClose={() => setIsContactOpen(false)}
       />
 
-      {/* Exhibition & Album Colophon Footer */}
-      <footer className="w-full border-t border-neutral-900 bg-[#060608] py-10 px-6 font-mono text-xs text-neutral-400">
+      {/* Exhibition Colophon Footer */}
+      <footer className="w-full border-t border-neutral-900 bg-[#060608] py-8 sm:py-10 px-4 sm:px-6 font-mono text-xs text-neutral-400">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-1 text-center md:text-left">
             <p className="text-white font-medium">© 2026 VIKRAM · UNFILTERED ARCHIVES</p>
-            <p className="text-neutral-400 text-[11px]">
-              Canon EOS 200D · Nikon D3300 · Canon IXUS 145 · Samsung S860
+            <p className="text-neutral-500 text-[11px]">
+              35mm Optical Studies & Visual Rationale Documentation
             </p>
           </div>
 
@@ -176,7 +148,7 @@ export function App() {
                 sound.playFocusTick();
                 setIsContactOpen(true);
               }}
-              className="text-amber-400 hover:text-amber-300 transition-colors"
+              className="text-amber-400 hover:text-amber-300 transition-colors cursor-pointer"
             >
               Contact / Inquiries
             </button>

@@ -1,17 +1,20 @@
-import { useState, useEffect } from 'react';
-import type { FeaturedPhoto, AlbumPhoto } from '../data/userPhotosData';
+import React, { useState, useEffect } from 'react';
+import type { SplitFrameSpecimen } from '../data/splitFrameData';
 import { sound } from '../utils/audio';
 
-type InspectablePhoto = (FeaturedPhoto & { isAlbum?: false }) | (AlbumPhoto & { isAlbum: true });
-
 interface UserPhotoModalProps {
-  photo: InspectablePhoto | null;
+  photo: SplitFrameSpecimen | null;
   onClose: () => void;
   onNext?: () => void;
   onPrev?: () => void;
 }
 
-export function UserPhotoModal({ photo, onClose, onNext, onPrev }: UserPhotoModalProps) {
+export const UserPhotoModal: React.FC<UserPhotoModalProps> = ({
+  photo,
+  onClose,
+  onNext,
+  onPrev,
+}) => {
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
   const [touchStartY, setTouchStartY] = useState<number | null>(null);
 
@@ -49,18 +52,14 @@ export function UserPhotoModal({ photo, onClose, onNext, onPrev }: UserPhotoModa
 
   if (!photo) return null;
 
-  const isAlbum = 'isAlbum' in photo && photo.isAlbum;
-  const featured = !isAlbum ? (photo as FeaturedPhoto) : null;
-  const album = isAlbum ? (photo as AlbumPhoto) : null;
-
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 bg-black/92 backdrop-blur-xl select-none animate-fadeIn">
-      {/* Background radial glow */}
+      {/* Background ambient radial tone glow */}
       <div
         className="absolute inset-0 pointer-events-none opacity-25 filter blur-3xl transition-colors duration-700"
         style={{
-          background: featured && featured.palette[1]
-            ? `radial-gradient(circle at 50% 50%, ${featured.palette[1]}, transparent 70%)`
+          background: photo.palette[1]
+            ? `radial-gradient(circle at 50% 50%, ${photo.palette[1]}, transparent 70%)`
             : 'radial-gradient(circle at 50% 50%, #4a2818, transparent 70%)',
         }}
       />
@@ -85,15 +84,26 @@ export function UserPhotoModal({ photo, onClose, onNext, onPrev }: UserPhotoModa
         <div 
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
-          className="relative lg:w-7/12 aspect-auto min-h-[240px] sm:min-h-[360px] max-h-[46vh] lg:max-h-none bg-[#060608] flex items-center justify-center overflow-hidden p-2 sm:p-4 touch-pan-y flex-shrink-0"
+          className="relative lg:w-7/12 aspect-auto min-h-[260px] sm:min-h-[380px] max-h-[46vh] lg:max-h-none bg-[#050508] flex items-center justify-center overflow-hidden p-2 sm:p-6 touch-pan-y flex-shrink-0"
         >
-          <img
-            src={photo.url}
-            alt={featured?.title || album?.caption || 'Photograph'}
-            className="w-full h-full object-contain max-h-[44vh] lg:max-h-[75vh] rounded-lg select-none"
-          />
+          {photo.imageUrl ? (
+            <img
+              src={photo.imageUrl}
+              alt={photo.title}
+              className="w-full h-full object-contain max-h-[44vh] lg:max-h-[75vh] rounded-lg select-none"
+            />
+          ) : (
+            <div className="w-full max-w-sm aspect-[4/3] rounded-xl border border-dashed border-neutral-800 bg-neutral-950/60 p-6 flex flex-col items-center justify-center text-center">
+              <span className="font-cinzel text-xs text-neutral-300 uppercase tracking-[0.25em] mb-1">
+                Specimen #{String(photo.order).padStart(2, '0')}
+              </span>
+              <span className="font-mono text-[11px] text-neutral-500">
+                Awaiting Specimen Photograph & Link
+              </span>
+            </div>
+          )}
 
-          {/* Previous / Next on modal */}
+          {/* Previous / Next buttons */}
           {onPrev && (
             <button
               onClick={() => {
@@ -123,8 +133,8 @@ export function UserPhotoModal({ photo, onClose, onNext, onPrev }: UserPhotoModa
           )}
 
           {/* Registration stamp */}
-          <div className="absolute bottom-2 left-3 font-mono text-[9px] sm:text-[10px] text-white/50 uppercase bg-black/80 px-2 py-0.5 rounded border border-white/10 max-w-[70%] truncate">
-            {photo.filename}
+          <div className="absolute bottom-2 left-3 font-mono text-[9px] sm:text-[10px] text-white/50 uppercase bg-black/80 px-2.5 py-0.5 rounded border border-white/10 max-w-[70%] truncate">
+            SPECIMEN #{String(photo.order).padStart(2, '0')} · DARKROOM ARCHIVE
           </div>
         </div>
 
@@ -133,86 +143,68 @@ export function UserPhotoModal({ photo, onClose, onNext, onPrev }: UserPhotoModa
           <div>
             <div className="flex items-center justify-between text-xs font-mono text-neutral-400 mb-2">
               <span className="bg-neutral-800 px-2.5 py-0.5 rounded text-neutral-300 font-semibold uppercase">
-                {isAlbum ? 'Album Field Print' : 'Curated Top 30'}
+                {photo.subtitle}
               </span>
               <span>{photo.date}</span>
             </div>
 
             <h2 className="text-2xl md:text-3xl font-light text-white tracking-tight font-editorial mb-1">
-              {featured?.title || album?.caption}
+              {photo.title}
             </h2>
             <p className="text-xs font-mono text-neutral-400 mb-6">
               {photo.location}
             </p>
 
-            {featured && (
-              <div className="space-y-4">
-                {/* Why I Took This */}
-                <div className="p-4 bg-neutral-900 rounded-xl border border-neutral-800">
-                  <div className="flex items-center gap-2 mb-1.5 text-amber-400 font-mono text-xs uppercase font-semibold">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <span>Why I Took This Photo</span>
-                  </div>
-                  <p className="text-neutral-200 text-sm italic font-sans leading-relaxed">
-                    "{featured.whyITookThis}"
-                  </p>
+            <div className="space-y-4">
+              {/* Why I Took This */}
+              <div className="p-4 bg-neutral-900 rounded-xl border border-neutral-800">
+                <div className="flex items-center gap-2 mb-1.5 text-amber-400 font-mono text-xs uppercase font-semibold">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span>Why I Took This Photo</span>
                 </div>
+                <p className="text-neutral-200 text-sm italic font-sans leading-relaxed">
+                  {photo.whyITookThis ? `"${photo.whyITookThis}"` : 'Awaiting personal reason & rationale from photographer.'}
+                </p>
+              </div>
 
-                {/* What Caught My Eye */}
-                <div>
-                  <span className="font-mono text-[11px] uppercase tracking-wider text-neutral-400 block mb-1">
-                    What Caught My Eye
-                  </span>
-                  <p className="text-neutral-300 text-xs sm:text-sm leading-relaxed">
-                    {featured.whatCaughtMyEye}
-                  </p>
+              {/* What Caught My Eye */}
+              <div>
+                <span className="font-mono text-[11px] uppercase tracking-wider text-neutral-400 block mb-1">
+                  What Caught My Eye
+                </span>
+                <p className="text-neutral-300 text-xs sm:text-sm leading-relaxed">
+                  {photo.whatCaughtMyEye || 'Light direction, subject gesture, or candid moment.'}
+                </p>
+              </div>
+
+              {/* Setting / Atmosphere */}
+              <div>
+                <span className="font-mono text-[11px] uppercase tracking-wider text-neutral-400 block mb-1">
+                  Atmosphere & Setting
+                </span>
+                <p className="text-neutral-400 text-xs sm:text-sm leading-relaxed">
+                  {photo.story || 'Ambient noise, time of day, candid environment.'}
+                </p>
+              </div>
+
+              {/* Telemetry */}
+              <div className="grid grid-cols-2 gap-2 text-xs font-mono pt-3 border-t border-neutral-800">
+                <div className="bg-neutral-950 p-2.5 rounded border border-neutral-800">
+                  <span className="text-[10px] text-neutral-500 uppercase block">Camera</span>
+                  <span className="text-neutral-200">{photo.cameraInfo}</span>
                 </div>
-
-                {/* Narrative */}
-                <div>
-                  <span className="font-mono text-[11px] uppercase tracking-wider text-neutral-400 block mb-1">
-                    Atmosphere & Setting
-                  </span>
-                  <p className="text-neutral-400 text-xs sm:text-sm leading-relaxed">
-                    {featured.story}
-                  </p>
-                </div>
-
-                {/* Telemetry */}
-                <div className="grid grid-cols-2 gap-2 text-xs font-mono pt-3 border-t border-neutral-800">
-                  <div className="bg-neutral-950 p-2.5 rounded border border-neutral-800">
-                    <span className="text-[10px] text-neutral-500 uppercase block">Camera</span>
-                    <span className="text-neutral-200">{featured.cameraInfo}</span>
-                  </div>
-                  <div className="bg-neutral-950 p-2.5 rounded border border-neutral-800">
-                    <span className="text-[10px] text-neutral-500 uppercase block">Lens & Optics</span>
-                    <span className="text-neutral-200 truncate block">{featured.lensInfo}</span>
-                  </div>
+                <div className="bg-neutral-950 p-2.5 rounded border border-neutral-800">
+                  <span className="text-[10px] text-neutral-500 uppercase block">Lens & Optics</span>
+                  <span className="text-neutral-200 truncate block">{photo.lensInfo}</span>
                 </div>
               </div>
-            )}
-
-            {album && (
-              <div className="space-y-4">
-                <div className="p-4 bg-neutral-900 rounded-xl border border-neutral-800">
-                  <span className="text-amber-400 font-mono text-xs uppercase block mb-1">Handwritten Field Note</span>
-                  <p className="font-handwritten text-2xl text-neutral-200 leading-snug">
-                    "{album.caption}"
-                  </p>
-                </div>
-                <div className="bg-neutral-950 p-4 rounded-xl border border-neutral-800 text-xs font-mono text-neutral-400 space-y-2">
-                  <p><span className="text-neutral-500">Archival Plate:</span> {album.filename}</p>
-                  <p><span className="text-neutral-500">Field Location:</span> {album.location}</p>
-                  <p><span className="text-neutral-500">Capture Date:</span> {album.date}</p>
-                </div>
-              </div>
-            )}
+            </div>
           </div>
 
           <div className="mt-8 pt-4 border-t border-neutral-800 flex items-center justify-between text-xs font-mono text-neutral-500">
-            <span>ARCHIVAL SPECIMEN #{photo.id.toUpperCase()}</span>
+            <span>SPECIMEN #{String(photo.order).padStart(2, '0')}</span>
             <span>PRESS ESC TO CLOSE</span>
           </div>
         </div>
@@ -220,4 +212,4 @@ export function UserPhotoModal({ photo, onClose, onNext, onPrev }: UserPhotoModa
       </div>
     </div>
   );
-}
+};
