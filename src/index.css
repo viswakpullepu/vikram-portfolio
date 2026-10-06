@@ -9,6 +9,8 @@
     --font-mono: 'JetBrains Mono', monospace;
     --font-sans: 'Plus Jakarta Sans', sans-serif;
     --font-editorial: 'Playfair Display', Georgia, serif;
+    --font-curved: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+    --font-italiana: 'Italiana', serif;
     --font-handwritten: 'Caveat', cursive;
   }
 
@@ -78,6 +80,14 @@
 
 .font-cinzel {
   font-family: var(--font-cinzel);
+}
+
+.font-curved {
+  font-family: var(--font-curved);
+}
+
+.font-italiana {
+  font-family: var(--font-italiana);
 }
 
 /* Subtle Fade In Animation */

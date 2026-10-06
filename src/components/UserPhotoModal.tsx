@@ -148,7 +148,7 @@ export const UserPhotoModal: React.FC<UserPhotoModalProps> = ({
               <span>{photo.date}</span>
             </div>
 
-            <h2 className="text-2xl md:text-3xl font-light text-white tracking-tight font-editorial mb-1">
+            <h2 className="text-3xl md:text-4xl font-normal text-white tracking-tight font-curved mb-1 capitalize">
               {photo.title}
             </h2>
             <p className="text-xs font-mono text-neutral-400 mb-6">
@@ -157,16 +157,16 @@ export const UserPhotoModal: React.FC<UserPhotoModalProps> = ({
 
             <div className="space-y-4">
               {/* Why I Took This */}
-              <div className="p-4 bg-neutral-900 rounded-xl border border-neutral-800">
-                <div className="flex items-center gap-2 mb-1.5 text-amber-400 font-mono text-xs uppercase font-semibold">
+              <div className="p-4 sm:p-5 bg-neutral-900/90 rounded-xl border border-neutral-800">
+                <div className="flex items-center gap-2 mb-2 text-amber-400 font-mono text-xs uppercase font-semibold">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   <span>Why I Took This Photo</span>
                 </div>
-                <p className="text-neutral-200 text-sm italic font-sans leading-relaxed">
-                  {photo.whyITookThis ? `"${photo.whyITookThis}"` : 'Awaiting personal reason & rationale from photographer.'}
-                </p>
+                <blockquote className="text-amber-100/95 text-lg sm:text-xl font-curved italic font-light leading-relaxed">
+                  "{photo.whyITookThis}"
+                </blockquote>
               </div>
 
               {/* What Caught My Eye */}

@@ -60,7 +60,7 @@ export function App() {
               <span>Photographic Archives · Top 10 Specimen Split Frames</span>
             </div>
             
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-light text-white font-editorial tracking-tight">
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-normal text-white font-curved tracking-tight">
               Vikram
             </h1>
 
