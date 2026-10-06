@@ -55,27 +55,34 @@ export function App() {
               </div>
             </div>
 
-            <div className="space-y-2.5 text-center sm:text-left flex-1">
-              <div className="flex items-center justify-center sm:justify-start gap-2 font-mono text-[11px] sm:text-xs text-neutral-400 uppercase tracking-widest">
+            <div className="space-y-4 text-center sm:text-left flex-1">
+              <div className="flex items-center justify-center sm:justify-start gap-2 font-mono text-[11px] sm:text-xs text-amber-400 uppercase tracking-widest">
                 <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
-                <span>Photographer & Visual Archives</span>
+                <span>Street Photographer · Artist Manifesto</span>
               </div>
               
-              <h1 className="text-4xl sm:text-6xl lg:text-7xl font-normal text-white font-curved tracking-tight">
+              <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold text-white font-curved tracking-tight">
                 Vikram
               </h1>
 
-              <p className="text-neutral-300 text-xs sm:text-sm md:text-base font-sans max-w-2xl font-light leading-relaxed">
-                An unvarnished visual study of fleeting golden angles, street candids, and intimate nocturnes. Formatted into the Top 10 premier specimen split frames pairing visual specimens with personal rationale.
-              </p>
+              {/* Bold & Stylish Artist Manifesto */}
+              <div className="space-y-3.5 max-w-3xl pt-1">
+                <p className="font-curved italic text-xl sm:text-2xl lg:text-[28px] font-light text-amber-100/95 leading-relaxed tracking-wide">
+                  "I am <span className="font-semibold text-white not-italic font-curved">Vikram</span>, a street photographer driven by <strong className="font-semibold text-amber-300 not-italic">curiosity rather than perfection</strong>. My work is not about creating flawless images; it is about capturing <strong className="font-semibold text-white not-italic">honest moments</strong> that often go unnoticed in the rush of everyday life."
+                </p>
+
+                <p className="text-neutral-300 text-xs sm:text-sm md:text-base font-sans font-light leading-relaxed border-l-2 border-amber-500/50 pl-4 py-1 bg-neutral-900/40 rounded-r-lg">
+                  While many photographers search for the extraordinary, I am drawn to the ordinary — the fleeting expressions, quiet interactions, imperfect details, and stories hidden in plain sight. I believe <strong className="font-medium text-amber-200">every street has a voice</strong>, and <strong className="font-medium text-white">every frame is an opportunity</strong> to preserve a piece of it.
+                </p>
+              </div>
 
               {/* Quick Instagram Badge */}
-              <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 pt-1">
+              <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 pt-2">
                 <a
                   href="https://www.instagram.com/rigzz.iii/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-3 sm:px-3.5 py-1.5 rounded-full bg-neutral-900 border border-neutral-800 text-neutral-300 hover:text-white hover:border-pink-500/50 hover:bg-neutral-850 font-mono text-[11px] sm:text-xs transition-all"
+                  className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-neutral-900 border border-neutral-800 text-neutral-300 hover:text-white hover:border-pink-500/50 hover:bg-neutral-850 font-mono text-[11px] sm:text-xs transition-all shadow-sm"
                 >
                   <svg className="w-3.5 h-3.5 text-pink-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
