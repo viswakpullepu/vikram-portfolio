@@ -10,6 +10,8 @@ export function FeaturedSplitFrame({ onSelectPhotoModal }: FeaturedSplitFramePro
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [isAutoplay, setIsAutoplay] = useState<boolean>(false);
   const [isImageZoomed, setIsImageZoomed] = useState<boolean>(false);
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+  const [touchStartY, setTouchStartY] = useState<number | null>(null);
 
   const currentPhoto: FeaturedPhoto = TOP_30_FEATURED[currentIndex];
 
@@ -22,6 +24,28 @@ export function FeaturedSplitFrame({ onSelectPhotoModal }: FeaturedSplitFramePro
     sound.playFocusTick(0.9);
     setCurrentIndex((prev) => (prev - 1 + TOP_30_FEATURED.length) % TOP_30_FEATURED.length);
   }, []);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStartX(e.touches[0].clientX);
+    setTouchStartY(e.touches[0].clientY);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX === null || touchStartY === null) return;
+    const deltaX = e.changedTouches[0].clientX - touchStartX;
+    const deltaY = e.changedTouches[0].clientY - touchStartY;
+    
+    // Predominantly horizontal swipe > 40px
+    if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY) * 1.3) {
+      if (deltaX < 0) {
+        handleNext();
+      } else {
+        handlePrev();
+      }
+    }
+    setTouchStartX(null);
+    setTouchStartY(null);
+  };
 
   const handleSelectIndex = (idx: number) => {
     if (idx !== currentIndex) {
@@ -53,39 +77,39 @@ export function FeaturedSplitFrame({ onSelectPhotoModal }: FeaturedSplitFramePro
   }, [handleNext, handlePrev]);
 
   return (
-    <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <section className="w-full max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 py-6 sm:py-10">
       {/* Section Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between mb-6 pb-4 border-b border-neutral-800/80 gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-4 sm:mb-6 pb-4 border-b border-neutral-800/80 gap-3 sm:gap-4">
         <div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5">
             <span className="inline-block w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse" />
-            <span className="font-mono text-xs tracking-widest uppercase text-neutral-400">
+            <span className="font-mono text-[10px] sm:text-xs tracking-widest uppercase text-neutral-400">
               Curated Specimen Study · 30 Premier Works
             </span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-light text-white tracking-tight mt-1 font-editorial">
+          <h2 className="text-xl sm:text-3xl font-light text-white tracking-tight mt-1 font-editorial">
             The Split Frame Archive
           </h2>
         </div>
 
         {/* Counter and Autoplay Toggle */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center justify-between sm:justify-end gap-3 w-full sm:w-auto">
           <button
             onClick={() => {
               sound.playFocusTick(1.2);
               setIsAutoplay((prev) => !prev);
             }}
-            className={`px-3 py-1.5 rounded-full text-xs font-mono tracking-wider transition-all flex items-center gap-2 border ${
+            className={`px-3 py-1.5 rounded-full text-[11px] sm:text-xs font-mono tracking-wider transition-all flex items-center gap-2 border ${
               isAutoplay
                 ? 'bg-amber-500/20 text-amber-300 border-amber-500/50 shadow-[0_0_15px_rgba(245,158,11,0.2)]'
                 : 'bg-neutral-900/80 text-neutral-400 border-neutral-800 hover:text-neutral-200 hover:border-neutral-700'
             }`}
           >
             <span className={`w-1.5 h-1.5 rounded-full ${isAutoplay ? 'bg-amber-400 animate-ping' : 'bg-neutral-600'}`} />
-            {isAutoplay ? 'AUTOPLAY ON (6s)' : 'PLAY SLIDESHOW'}
+            {isAutoplay ? 'AUTOPLAY ON' : 'PLAY SLIDESHOW'}
           </button>
 
-          <div className="font-mono text-sm tracking-wider text-neutral-400 bg-neutral-900/90 px-3 py-1.5 rounded-md border border-neutral-800">
+          <div className="font-mono text-xs sm:text-sm tracking-wider text-neutral-400 bg-neutral-900/90 px-3 py-1.5 rounded-md border border-neutral-800">
             <span className="text-white font-semibold">
               {String(currentIndex + 1).padStart(2, '0')}
             </span>
@@ -101,12 +125,16 @@ export function FeaturedSplitFrame({ onSelectPhotoModal }: FeaturedSplitFramePro
         {/* Subtle Frame Matte Bevel */}
         <div className="absolute inset-0 pointer-events-none border border-white/5 rounded-2xl z-20" />
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[640px] xl:min-h-[700px]">
+        <div className="grid grid-cols-1 lg:grid-cols-12 min-h-0 lg:min-h-[640px] xl:min-h-[700px]">
           
           {/* ======================================================== */}
           {/* LEFT INNER FRAME: OCCUPIED ENTIRELY BY THE PICTURE        */}
           {/* ======================================================== */}
-          <div className="lg:col-span-7 bg-[#070709] relative flex items-center justify-center overflow-hidden border-b lg:border-b-0 lg:border-r border-neutral-800/80 group">
+          <div 
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+            className="lg:col-span-7 bg-[#070709] relative flex items-center justify-center overflow-hidden border-b lg:border-b-0 lg:border-r border-neutral-800/80 group touch-pan-y"
+          >
             
             {/* Darkroom Safelight Glow Accent behind photo */}
             <div 
@@ -117,12 +145,12 @@ export function FeaturedSplitFrame({ onSelectPhotoModal }: FeaturedSplitFramePro
             />
 
             {/* Photographic Image */}
-            <div className="relative w-full h-full min-h-[420px] lg:min-h-full flex items-center justify-center p-3 sm:p-6">
+            <div className="relative w-full h-full min-h-[280px] sm:min-h-[400px] lg:min-h-full flex items-center justify-center p-2.5 sm:p-6">
               <img
                 key={currentPhoto.id}
                 src={currentPhoto.url}
                 alt={currentPhoto.title}
-                className={`w-full h-full object-contain max-h-[580px] xl:max-h-[660px] rounded-lg transition-transform duration-500 ease-out select-none ${
+                className={`w-full h-full object-contain max-h-[360px] sm:max-h-[520px] xl:max-h-[660px] rounded-lg transition-transform duration-500 ease-out select-none ${
                   isImageZoomed ? 'scale-110 cursor-zoom-out' : 'cursor-pointer hover:scale-[1.01]'
                 }`}
                 onClick={() => {
@@ -137,8 +165,8 @@ export function FeaturedSplitFrame({ onSelectPhotoModal }: FeaturedSplitFramePro
               />
 
               {/* Watermark / Archival Registration Number */}
-              <div className="absolute bottom-5 left-8 font-mono text-[10px] tracking-widest text-white/40 uppercase bg-black/60 backdrop-blur-md px-2.5 py-1 rounded border border-white/10 pointer-events-none">
-                REG · {currentPhoto.filename} · SPECIMEN {String(currentIndex + 1).padStart(2, '0')}
+              <div className="absolute bottom-3 left-3 sm:bottom-5 sm:left-6 font-mono text-[9px] sm:text-[10px] tracking-widest text-white/50 uppercase bg-black/70 backdrop-blur-md px-2 sm:px-2.5 py-0.5 sm:py-1 rounded border border-white/10 pointer-events-none max-w-[80%] truncate">
+                REG · {currentPhoto.filename} · #{String(currentIndex + 1).padStart(2, '0')}
               </div>
 
               {/* Quick Click to Expand Indicator */}
@@ -147,7 +175,7 @@ export function FeaturedSplitFrame({ onSelectPhotoModal }: FeaturedSplitFramePro
                   sound.playShutter();
                   if (onSelectPhotoModal) onSelectPhotoModal(currentPhoto);
                 }}
-                className="absolute top-5 right-8 opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-neutral-900/80 hover:bg-neutral-800 text-neutral-300 hover:text-white p-2 rounded-full border border-neutral-700/80 backdrop-blur-md"
+                className="absolute top-3 right-3 sm:top-5 sm:right-6 opacity-90 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-200 bg-neutral-900/85 hover:bg-neutral-800 text-neutral-200 hover:text-white p-2 rounded-full border border-neutral-700/80 backdrop-blur-md cursor-pointer"
                 title="Inspect in Fullscreen Darkroom Modal"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -160,7 +188,7 @@ export function FeaturedSplitFrame({ onSelectPhotoModal }: FeaturedSplitFramePro
           {/* ======================================================== */}
           {/* RIGHT INNER FRAME: WHY I TOOK THE PIC & REASONS / STORY  */}
           {/* ======================================================== */}
-          <div className="lg:col-span-5 bg-[#0e1015] p-6 sm:p-8 xl:p-10 flex flex-col justify-between">
+          <div className="lg:col-span-5 bg-[#0e1015] p-4 sm:p-7 xl:p-10 flex flex-col justify-between">
             
             {/* Top Details & Header */}
             <div>
@@ -257,11 +285,11 @@ export function FeaturedSplitFrame({ onSelectPhotoModal }: FeaturedSplitFramePro
             </div>
 
             {/* Bottom Controls inside the right frame */}
-            <div className="mt-8 pt-4 border-t border-neutral-800/80 flex items-center justify-between gap-4">
+            <div className="mt-6 sm:mt-8 pt-4 border-t border-neutral-800/80 flex flex-wrap items-center justify-between gap-3">
               <div className="flex items-center gap-2">
                 <button
                   onClick={handlePrev}
-                  className="px-4 py-2 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-neutral-300 hover:text-white border border-neutral-800 hover:border-neutral-700 transition-all font-mono text-xs flex items-center gap-1.5 shadow-sm active:scale-95"
+                  className="px-3 sm:px-4 py-2 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-neutral-300 hover:text-white border border-neutral-800 hover:border-neutral-700 transition-all font-mono text-xs flex items-center gap-1.5 shadow-sm active:scale-95"
                 >
                   <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -270,7 +298,7 @@ export function FeaturedSplitFrame({ onSelectPhotoModal }: FeaturedSplitFramePro
                 </button>
                 <button
                   onClick={handleNext}
-                  className="px-4 py-2 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-neutral-300 hover:text-white border border-neutral-800 hover:border-neutral-700 transition-all font-mono text-xs flex items-center gap-1.5 shadow-sm active:scale-95"
+                  className="px-3 sm:px-4 py-2 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-neutral-300 hover:text-white border border-neutral-800 hover:border-neutral-700 transition-all font-mono text-xs flex items-center gap-1.5 shadow-sm active:scale-95"
                 >
                   <span>Next</span>
                   <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -285,7 +313,7 @@ export function FeaturedSplitFrame({ onSelectPhotoModal }: FeaturedSplitFramePro
                   sound.playShutter();
                   if (onSelectPhotoModal) onSelectPhotoModal(currentPhoto);
                 }}
-                className="font-mono text-xs text-neutral-400 hover:text-white transition-colors flex items-center gap-1.5"
+                className="font-mono text-[11px] sm:text-xs text-neutral-400 hover:text-white transition-colors flex items-center gap-1.5 py-1.5"
               >
                 <span>Full-Bleed Specimen</span>
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -301,17 +329,17 @@ export function FeaturedSplitFrame({ onSelectPhotoModal }: FeaturedSplitFramePro
       </div>
 
       {/* Interactive Bottom Filmstrip Scroller for all 30 photos */}
-      <div className="mt-4 bg-neutral-950/70 p-3 rounded-xl border border-neutral-900">
+      <div className="mt-4 bg-neutral-950/70 p-2.5 sm:p-3 rounded-xl border border-neutral-900">
         <div className="flex items-center justify-between mb-2 px-1">
-          <span className="font-mono text-[10px] text-neutral-500 uppercase tracking-widest">
-            Direct Specimen Selection (30 Curated Frames)
+          <span className="font-mono text-[9px] sm:text-[10px] text-neutral-500 uppercase tracking-widest truncate">
+            Specimens (30 Curated Frames)
           </span>
-          <span className="font-mono text-[10px] text-neutral-400">
-            Click frame to inspect
+          <span className="font-mono text-[9px] sm:text-[10px] text-neutral-400">
+            Swipe to browse
           </span>
         </div>
 
-        <div className="flex items-center gap-2 overflow-x-auto pb-1 pt-0.5 scrollbar-thin">
+        <div className="flex items-center gap-2 overflow-x-auto pb-1 pt-0.5 scrollbar-thin touch-pan-x">
           {TOP_30_FEATURED.map((photo, idx) => {
             const isSelected = idx === currentIndex;
             return (

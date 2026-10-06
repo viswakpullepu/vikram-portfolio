@@ -29,8 +29,8 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md select-none animate-in fade-in duration-200">
-      <div className="relative w-full max-w-lg bg-[#0e0f14] border border-neutral-700/80 rounded-3xl p-6 md:p-8 shadow-2xl overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md select-none animate-in fade-in duration-200">
+      <div className="relative w-full max-w-lg bg-[#0e0f14] border border-neutral-700/80 rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-2xl overflow-y-auto max-h-[92vh]">
         
         {/* Close Button */}
         <button
@@ -38,26 +38,26 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
             sound.playFocusTick();
             onClose();
           }}
-          className="absolute top-4 right-4 p-2 rounded-full bg-neutral-800 hover:bg-neutral-700 text-neutral-300 transition-colors cursor-pointer"
+          className="absolute top-3 right-3 sm:top-4 sm:right-4 p-2 rounded-full bg-neutral-800 hover:bg-neutral-700 text-neutral-300 transition-colors cursor-pointer"
         >
           <X className="w-4 h-4" />
         </button>
 
-        <div className="flex items-center gap-2 text-xs font-mono text-amber-400 mb-2">
+        <div className="flex items-center gap-2 text-xs font-mono text-amber-400 mb-1.5 sm:mb-2">
           <Coffee className="w-3.5 h-3.5" />
           <span>SAY HELLO / GET IN TOUCH</span>
         </div>
 
-        <h2 className="text-2xl font-bold text-white mb-2" style={{ fontFamily: 'var(--font-cinzel)' }}>
+        <h2 className="text-xl sm:text-2xl font-bold text-white mb-2" style={{ fontFamily: 'var(--font-cinzel)' }}>
           LET'S TALK
         </h2>
 
-        <p className="text-xs text-neutral-300 mb-6 leading-relaxed">
+        <p className="text-xs text-neutral-300 mb-4 sm:mb-6 leading-relaxed">
           Whether you have an internship spot, need an assistant on set, or just want to chat about cameras and coffee — my inbox is always open.
         </p>
 
         {sentMessage ? (
-          <div className="bg-emerald-950/60 border border-emerald-500/60 p-6 rounded-2xl text-center space-y-3">
+          <div className="bg-emerald-950/60 border border-emerald-500/60 p-5 sm:p-6 rounded-2xl text-center space-y-3">
             <div className="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 mx-auto flex items-center justify-center">
               <Check className="w-5 h-5" />
             </div>
@@ -76,25 +76,25 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
             </button>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-3.5 sm:space-y-4">
             <div>
-              <label className="block text-[11px] font-mono text-neutral-400 uppercase mb-1">Your Name & Studio / Agency</label>
+              <label className="block text-[10px] sm:text-[11px] font-mono text-neutral-400 uppercase mb-1">Your Name & Studio / Agency</label>
               <input
                 type="text"
                 required
                 placeholder="e.g. Sarah Lin · Creative Director, Studio 9"
                 value={recruiterAgency}
                 onChange={(e) => setRecruiterAgency(e.target.value)}
-                className="w-full bg-neutral-900 border border-neutral-700 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-amber-400"
+                className="w-full bg-neutral-900 border border-neutral-700 rounded-xl px-3.5 py-2.5 text-base sm:text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-amber-400"
               />
             </div>
 
             <div>
-              <label className="block text-[11px] font-mono text-neutral-400 uppercase mb-1">What's on your mind?</label>
+              <label className="block text-[10px] sm:text-[11px] font-mono text-neutral-400 uppercase mb-1">What's on your mind?</label>
               <select
                 value={inquiryType}
                 onChange={(e) => setInquiryType(e.target.value)}
-                className="w-full bg-neutral-900 border border-neutral-700 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-amber-400"
+                className="w-full bg-neutral-900 border border-neutral-700 rounded-xl px-3.5 py-2.5 text-base sm:text-xs text-white focus:outline-none focus:border-amber-400"
               >
                 <option value="Internship / Assistant Role">Discussing an Internship / Assistant Opportunity</option>
                 <option value="15-min Portfolio Review">15-minute Portfolio Review & Feedback</option>
@@ -104,11 +104,11 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
             </div>
 
             <div>
-              <label className="block text-[11px] font-mono text-neutral-400 uppercase mb-1">Note or message</label>
+              <label className="block text-[10px] sm:text-[11px] font-mono text-neutral-400 uppercase mb-1">Note or message</label>
               <textarea
                 rows={3}
                 placeholder="Hey Vikram, saw your portfolio. Would love to have a quick chat..."
-                className="w-full bg-neutral-900 border border-neutral-700 rounded-xl p-3 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-amber-400"
+                className="w-full bg-neutral-900 border border-neutral-700 rounded-xl p-3 text-base sm:text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-amber-400"
               />
             </div>
 

@@ -160,6 +160,9 @@ export function RealLifePhotoAlbum({ onInspectPhoto }: RealLifePhotoAlbumProps) 
   const [isFlipping, setIsFlipping] = useState<'forward' | 'backward' | null>(null);
   const [isContactSheetOpen, setIsContactSheetOpen] = useState<boolean>(false);
   const [inspectedPhoto, setInspectedPhoto] = useState<AlbumPhoto | null>(null);
+  const [mobileActiveSide, setMobileActiveSide] = useState<'left' | 'right'>('left');
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+  const [touchStartY, setTouchStartY] = useState<number | null>(null);
 
   // Current spread pages
   const currentLeftPhoto: AlbumPhoto | undefined = REMAINING_ALBUM_PHOTOS[currentSpread * 2];
@@ -193,10 +196,60 @@ export function RealLifePhotoAlbum({ onInspectPhoto }: RealLifePhotoAlbumProps) 
     }, 950);
   }, [currentSpread, isFlipping]);
 
+  // Mobile sequential navigation
+  const handleMobileNext = useCallback(() => {
+    if (isFlipping) return;
+    if (mobileActiveSide === 'left') {
+      sound.playPageTurn();
+      setMobileActiveSide('right');
+    } else {
+      if (currentSpread < totalSpreads - 1) {
+        handleNextPage();
+        setMobileActiveSide('left');
+      }
+    }
+  }, [isFlipping, mobileActiveSide, currentSpread, totalSpreads, handleNextPage]);
+
+  const handleMobilePrev = useCallback(() => {
+    if (isFlipping) return;
+    if (mobileActiveSide === 'right') {
+      sound.playPageTurn();
+      setMobileActiveSide('left');
+    } else {
+      if (currentSpread > 0) {
+        handlePrevPage();
+        setMobileActiveSide('right');
+      }
+    }
+  }, [isFlipping, mobileActiveSide, currentSpread, handlePrevPage]);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStartX(e.touches[0].clientX);
+    setTouchStartY(e.touches[0].clientY);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX === null || touchStartY === null) return;
+    const deltaX = e.changedTouches[0].clientX - touchStartX;
+    const deltaY = e.changedTouches[0].clientY - touchStartY;
+    
+    // Swipe left = next, Swipe right = prev
+    if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY) * 1.3) {
+      if (deltaX < 0) {
+        handleMobileNext();
+      } else {
+        handleMobilePrev();
+      }
+    }
+    setTouchStartX(null);
+    setTouchStartY(null);
+  };
+
   const handleJumpSpread = (spreadIdx: number) => {
     if (isFlipping || spreadIdx === currentSpread || spreadIdx < 0 || spreadIdx >= totalSpreads) return;
     sound.playPageTurn();
     setCurrentSpread(spreadIdx);
+    setMobileActiveSide('left');
     setIsContactSheetOpen(false);
   };
 
@@ -322,17 +375,68 @@ export function RealLifePhotoAlbum({ onInspectPhoto }: RealLifePhotoAlbumProps) 
           <div className="absolute bottom-2 right-2 w-8 h-8 border-b-2 border-r-2 border-amber-600/60 rounded-br-xl pointer-events-none" />
 
           {/* Foil Debossed Binder Header */}
-          <div className="text-center pb-4 pt-1 border-b border-amber-900/20">
-            <span className="font-cinzel tracking-[0.3em] text-xs sm:text-sm text-amber-200/50 uppercase">
+          <div className="text-center pb-3 sm:pb-4 pt-1 border-b border-amber-900/20">
+            <span className="font-cinzel tracking-[0.2em] sm:tracking-[0.3em] text-[10px] sm:text-sm text-amber-200/50 uppercase">
               Vikram · Archival Field Album · 2024—2026
             </span>
           </div>
 
+          {/* Mobile Spread Switcher Tabs (< md screens) */}
+          <div className="flex md:hidden items-center justify-between bg-black/50 px-2.5 py-1.5 rounded-xl mt-3 border border-neutral-800">
+            <div className="flex items-center gap-1.5">
+              <button
+                onClick={() => {
+                  sound.playPageTurn();
+                  setMobileActiveSide('left');
+                }}
+                className={`px-2.5 py-1 rounded-lg font-mono text-[10px] transition-all cursor-pointer ${
+                  mobileActiveSide === 'left'
+                    ? 'bg-amber-500/25 text-amber-200 border border-amber-500/60 font-semibold shadow-sm'
+                    : 'bg-neutral-900/80 text-neutral-400 border border-neutral-800 hover:text-white'
+                }`}
+              >
+                Left (p. {currentSpread * 2 + 1})
+              </button>
+              <button
+                onClick={() => {
+                  sound.playPageTurn();
+                  setMobileActiveSide('right');
+                }}
+                className={`px-2.5 py-1 rounded-lg font-mono text-[10px] transition-all cursor-pointer ${
+                  mobileActiveSide === 'right'
+                    ? 'bg-amber-500/25 text-amber-200 border border-amber-500/60 font-semibold shadow-sm'
+                    : 'bg-neutral-900/80 text-neutral-400 border border-neutral-800 hover:text-white'
+                }`}
+              >
+                Right (p. {currentSpread * 2 + 2})
+              </button>
+            </div>
+            <span className="font-mono text-[9px] text-neutral-400 flex items-center gap-1">
+              <span>Swipe ← →</span>
+            </span>
+          </div>
+
           {/* TWO-PAGE SPREAD BOOK STAGE (3D PRESERVED) */}
-          <div className="relative mt-4 rounded-xl shadow-2xl overflow-hidden preserve-3d">
+          <div className="relative mt-3 sm:mt-4 rounded-xl shadow-2xl overflow-hidden preserve-3d">
             
-            {/* BOOK SURFACE GRID */}
-            <div className="grid grid-cols-1 md:grid-cols-2 relative bg-[#f6f1e8] text-neutral-900 min-h-[580px] lg:min-h-[640px]">
+            {/* MOBILE SINGLE-PAGE VIEW (< md screens) */}
+            <div 
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
+              className="block md:hidden relative bg-[#f6f1e8] text-neutral-900 min-h-[460px] rounded-lg overflow-hidden shadow-xl touch-pan-y"
+            >
+              <AlbumSinglePage
+                photo={mobileActiveSide === 'left' ? currentLeftPhoto : currentRightPhoto}
+                pageNumber={mobileActiveSide === 'left' ? currentSpread * 2 + 1 : currentSpread * 2 + 2}
+                isRightPage={mobileActiveSide === 'right'}
+                onPhotoClick={handlePhotoClick}
+                onTurnPage={mobileActiveSide === 'left' ? handleMobileNext : handleMobilePrev}
+                canTurn={true}
+              />
+            </div>
+
+            {/* DESKTOP TWO-PAGE SPREAD BOOK GRID (md: and up) */}
+            <div className="hidden md:grid md:grid-cols-2 relative bg-[#f6f1e8] text-neutral-900 min-h-[580px] lg:min-h-[640px]">
               
               {/* Spine Center Gutter Crease & Shadow */}
               <div className="hidden md:block absolute inset-y-0 left-1/2 -translate-x-1/2 w-16 pointer-events-none z-30 album-gutter-shadow" />
@@ -515,23 +619,53 @@ export function RealLifePhotoAlbum({ onInspectPhoto }: RealLifePhotoAlbumProps) 
           </div>
 
           {/* Album Bottom Scrubber & Turn Page Buttons */}
-          <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4 px-2">
+          <div className="mt-5 sm:mt-6 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 px-1 sm:px-2">
             
-            {/* Prev Page Button */}
-            <button
-              onClick={handlePrevPage}
-              disabled={currentSpread === 0 || isFlipping !== null}
-              className={`px-5 py-2.5 rounded-xl font-mono text-xs flex items-center gap-2 transition-all cursor-pointer ${
-                currentSpread === 0 || isFlipping !== null
-                  ? 'bg-neutral-900/40 text-neutral-600 border border-neutral-900 cursor-not-allowed'
-                  : 'bg-neutral-900 hover:bg-neutral-800 text-neutral-200 border border-neutral-800 hover:border-neutral-700 shadow-md active:scale-95'
-              }`}
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-              <span>Turn Page Back</span>
-            </button>
+            <div className="flex items-center justify-between w-full sm:w-auto gap-2">
+              {/* Prev Page Button */}
+              <button
+                onClick={() => {
+                  if (typeof window !== 'undefined' && window.innerWidth < 768) {
+                    handleMobilePrev();
+                  } else {
+                    handlePrevPage();
+                  }
+                }}
+                disabled={(currentSpread === 0 && mobileActiveSide === 'left') || isFlipping !== null}
+                className={`flex-1 sm:flex-initial px-3.5 sm:px-5 py-2.5 rounded-xl font-mono text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+                  (currentSpread === 0 && mobileActiveSide === 'left') || isFlipping !== null
+                    ? 'bg-neutral-900/40 text-neutral-600 border border-neutral-900 cursor-not-allowed'
+                    : 'bg-neutral-900 hover:bg-neutral-800 text-neutral-200 border border-neutral-800 hover:border-neutral-700 shadow-md active:scale-95'
+                }`}
+              >
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+                <span>Turn Back</span>
+              </button>
+
+              {/* Next Page Button */}
+              <button
+                onClick={() => {
+                  if (typeof window !== 'undefined' && window.innerWidth < 768) {
+                    handleMobileNext();
+                  } else {
+                    handleNextPage();
+                  }
+                }}
+                disabled={(currentSpread >= totalSpreads - 1 && mobileActiveSide === 'right') || isFlipping !== null}
+                className={`flex-1 sm:flex-initial px-3.5 sm:px-5 py-2.5 rounded-xl font-mono text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+                  (currentSpread >= totalSpreads - 1 && mobileActiveSide === 'right') || isFlipping !== null
+                    ? 'bg-neutral-900/40 text-neutral-600 border border-neutral-900 cursor-not-allowed'
+                    : 'bg-neutral-900 hover:bg-neutral-800 text-neutral-200 border border-neutral-800 hover:border-neutral-700 shadow-md active:scale-95'
+                }`}
+              >
+                <span>Turn Forward</span>
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
 
             {/* Interactive Spread Slider */}
             <div className="flex items-center gap-3 w-full sm:w-80">
@@ -552,22 +686,6 @@ export function RealLifePhotoAlbum({ onInspectPhoto }: RealLifePhotoAlbumProps) 
               />
               <span className="font-mono text-[10px] text-neutral-400">{String(totalSpreads).padStart(2, '0')}</span>
             </div>
-
-            {/* Next Page Button */}
-            <button
-              onClick={handleNextPage}
-              disabled={currentSpread >= totalSpreads - 1 || isFlipping !== null}
-              className={`px-5 py-2.5 rounded-xl font-mono text-xs flex items-center gap-2 transition-all cursor-pointer ${
-                currentSpread >= totalSpreads - 1 || isFlipping !== null
-                  ? 'bg-neutral-900/40 text-neutral-600 border border-neutral-900 cursor-not-allowed'
-                  : 'bg-neutral-900 hover:bg-neutral-800 text-neutral-200 border border-neutral-800 hover:border-neutral-700 shadow-md active:scale-95'
-              }`}
-            >
-              <span>Turn Page Forward</span>
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
 
           </div>
 

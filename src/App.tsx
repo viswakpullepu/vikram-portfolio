@@ -60,18 +60,18 @@ export function App() {
       <main className="flex-1 w-full pb-20">
         
         {/* Prominent Editorial Header Introduction at the Starting */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-8 text-center md:text-left flex flex-col md:flex-row md:items-end justify-between border-b border-neutral-900 gap-6">
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-10 pb-6 sm:pb-8 text-center md:text-left flex flex-col md:flex-row md:items-end justify-between border-b border-neutral-900 gap-6">
           <div className="space-y-3">
-            <div className="flex items-center justify-center md:justify-start gap-2.5 font-mono text-xs text-neutral-400 uppercase tracking-widest">
+            <div className="flex items-center justify-center md:justify-start gap-2 font-mono text-[11px] sm:text-xs text-neutral-400 uppercase tracking-widest">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
               <span>Photographic Archives · 74 Raw Captures</span>
             </div>
             
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-light text-white font-editorial tracking-tight">
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-light text-white font-editorial tracking-tight">
               Vikram
             </h1>
 
-            <p className="text-neutral-300 text-sm sm:text-base font-sans max-w-2xl font-light leading-relaxed">
+            <p className="text-neutral-300 text-xs sm:text-sm md:text-base font-sans max-w-2xl font-light leading-relaxed">
               An unvarnished visual study of Indian streets, fleeting golden angles, raw CCD nocturnes, and unposed human warmth. Curated into 30 premier specimen split frames and an archival 44-print physical album.
             </p>
 
@@ -81,27 +81,27 @@ export function App() {
                 href="https://www.instagram.com/rigzz.iii/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-neutral-900 border border-neutral-800 text-neutral-300 hover:text-white hover:border-pink-500/50 hover:bg-neutral-850 font-mono text-xs transition-all"
+                className="inline-flex items-center gap-2 px-3 sm:px-3.5 py-1.5 rounded-full bg-neutral-900 border border-neutral-800 text-neutral-300 hover:text-white hover:border-pink-500/50 hover:bg-neutral-850 font-mono text-[11px] sm:text-xs transition-all"
               >
-                <svg className="w-3.5 h-3.5 text-pink-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg className="w-3.5 h-3.5 text-pink-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                   <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
                   <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
                 </svg>
-                <span>Follow on Instagram: <strong className="text-pink-300">@rigzz.iii</strong></span>
+                <span>Instagram: <strong className="text-pink-300">@rigzz.iii</strong></span>
               </a>
             </div>
           </div>
 
-          <div className="flex items-center justify-center md:justify-end gap-6 text-xs font-mono text-neutral-400">
+          <div className="flex items-center justify-center md:justify-end gap-5 sm:gap-6 text-xs font-mono text-neutral-400">
             <div className="text-center md:text-right">
-              <span className="text-white text-xl font-bold block">30</span>
-              <span className="uppercase text-[10px] tracking-wider text-neutral-400">Curated Split Frames</span>
+              <span className="text-white text-lg sm:text-xl font-bold block">30</span>
+              <span className="uppercase text-[9px] sm:text-[10px] tracking-wider text-neutral-400">Curated Split Frames</span>
             </div>
-            <div className="h-8 w-[1px] bg-neutral-800" />
+            <div className="h-7 sm:h-8 w-[1px] bg-neutral-800" />
             <div className="text-center md:text-right">
-              <span className="text-white text-xl font-bold block">44</span>
-              <span className="uppercase text-[10px] tracking-wider text-neutral-400">Mounted Album Prints</span>
+              <span className="text-white text-lg sm:text-xl font-bold block">44</span>
+              <span className="uppercase text-[9px] sm:text-[10px] tracking-wider text-neutral-400">Mounted Album Prints</span>
             </div>
           </div>
         </section>
@@ -115,11 +115,11 @@ export function App() {
         </div>
 
         {/* Section Divider: Transition from Exhibition Wall to Physical Library Desk */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-8 sm:my-12">
           <div className="relative flex items-center justify-center">
             <div className="w-full border-t border-neutral-800/80" />
-            <div className="absolute bg-[#08080a] px-6 py-2 border border-neutral-800 rounded-full font-mono text-[11px] text-neutral-400 uppercase tracking-widest flex items-center gap-2">
-              <svg className="w-3.5 h-3.5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="absolute bg-[#08080a] px-4 sm:px-6 py-1.5 sm:py-2 border border-neutral-800 rounded-full font-mono text-[10px] sm:text-[11px] text-neutral-400 uppercase tracking-widest flex items-center gap-2 text-center">
+              <svg className="w-3.5 h-3.5 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
               </svg>
               <span>Library Archive Table · Field Album Below</span>

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import type { FeaturedPhoto, AlbumPhoto } from '../data/userPhotosData';
 import { sound } from '../utils/audio';
 
@@ -12,6 +12,9 @@ interface UserPhotoModalProps {
 }
 
 export function UserPhotoModal({ photo, onClose, onNext, onPrev }: UserPhotoModalProps) {
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+  const [touchStartY, setTouchStartY] = useState<number | null>(null);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -22,6 +25,28 @@ export function UserPhotoModal({ photo, onClose, onNext, onPrev }: UserPhotoModa
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [onClose, onNext, onPrev]);
 
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStartX(e.touches[0].clientX);
+    setTouchStartY(e.touches[0].clientY);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX === null || touchStartY === null) return;
+    const deltaX = e.changedTouches[0].clientX - touchStartX;
+    const deltaY = e.changedTouches[0].clientY - touchStartY;
+    if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY) * 1.3) {
+      if (deltaX < 0 && onNext) {
+        sound.playFocusTick();
+        onNext();
+      } else if (deltaX > 0 && onPrev) {
+        sound.playFocusTick();
+        onPrev();
+      }
+    }
+    setTouchStartX(null);
+    setTouchStartY(null);
+  };
+
   if (!photo) return null;
 
   const isAlbum = 'isAlbum' in photo && photo.isAlbum;
@@ -29,7 +54,7 @@ export function UserPhotoModal({ photo, onClose, onNext, onPrev }: UserPhotoModa
   const album = isAlbum ? (photo as AlbumPhoto) : null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 md:p-6 bg-black/92 backdrop-blur-xl select-none animate-fadeIn">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 bg-black/92 backdrop-blur-xl select-none animate-fadeIn">
       {/* Background radial glow */}
       <div
         className="absolute inset-0 pointer-events-none opacity-25 filter blur-3xl transition-colors duration-700"
@@ -41,7 +66,7 @@ export function UserPhotoModal({ photo, onClose, onNext, onPrev }: UserPhotoModa
       />
 
       {/* Main Shell */}
-      <div className="relative w-full max-w-6xl max-h-[92vh] bg-[#0c0e12] border border-neutral-700/80 rounded-3xl overflow-hidden shadow-[0_30px_100px_rgba(0,0,0,0.95)] flex flex-col lg:flex-row">
+      <div className="relative w-full max-w-6xl max-h-[92vh] overflow-y-auto lg:overflow-hidden bg-[#0c0e12] border border-neutral-700/80 rounded-2xl sm:rounded-3xl shadow-[0_30px_100px_rgba(0,0,0,0.95)] flex flex-col lg:flex-row">
         
         {/* Close Button */}
         <button
@@ -49,19 +74,23 @@ export function UserPhotoModal({ photo, onClose, onNext, onPrev }: UserPhotoModa
             sound.playFocusTick();
             onClose();
           }}
-          className="absolute top-4 right-4 z-40 p-2.5 rounded-full bg-black/75 hover:bg-black text-white/70 hover:text-white border border-neutral-700 transition-colors cursor-pointer"
+          className="absolute top-3 right-3 sm:top-4 sm:right-4 z-40 p-2 sm:p-2.5 rounded-full bg-black/80 hover:bg-black text-white/80 hover:text-white border border-neutral-700 transition-colors cursor-pointer"
         >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
 
-        {/* Left Section: Full Bleed Specimen Viewport */}
-        <div className="relative lg:w-7/12 aspect-[4/3] lg:aspect-auto min-h-[360px] bg-[#060608] flex items-center justify-center overflow-hidden p-4">
+        {/* Left Section: Full Bleed Specimen Viewport with Touch Swiping */}
+        <div 
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+          className="relative lg:w-7/12 aspect-auto min-h-[240px] sm:min-h-[360px] max-h-[46vh] lg:max-h-none bg-[#060608] flex items-center justify-center overflow-hidden p-2 sm:p-4 touch-pan-y flex-shrink-0"
+        >
           <img
             src={photo.url}
             alt={featured?.title || album?.caption || 'Photograph'}
-            className="w-full h-full object-contain max-h-[75vh] rounded-lg select-none"
+            className="w-full h-full object-contain max-h-[44vh] lg:max-h-[75vh] rounded-lg select-none"
           />
 
           {/* Previous / Next on modal */}
@@ -71,9 +100,9 @@ export function UserPhotoModal({ photo, onClose, onNext, onPrev }: UserPhotoModa
                 sound.playFocusTick();
                 onPrev();
               }}
-              className="absolute left-3 top-1/2 -translate-y-1/2 z-30 p-2.5 rounded-full bg-black/70 hover:bg-black text-white/80 hover:text-white border border-neutral-700 transition-all cursor-pointer"
+              className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 z-30 p-2 sm:p-2.5 rounded-full bg-black/75 hover:bg-black text-white/80 hover:text-white border border-neutral-700 transition-all cursor-pointer"
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
             </button>
@@ -85,22 +114,22 @@ export function UserPhotoModal({ photo, onClose, onNext, onPrev }: UserPhotoModa
                 sound.playFocusTick();
                 onNext();
               }}
-              className="absolute right-3 top-1/2 -translate-y-1/2 z-30 p-2.5 rounded-full bg-black/70 hover:bg-black text-white/80 hover:text-white border border-neutral-700 transition-all cursor-pointer"
+              className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 z-30 p-2 sm:p-2.5 rounded-full bg-black/75 hover:bg-black text-white/80 hover:text-white border border-neutral-700 transition-all cursor-pointer"
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </button>
           )}
 
           {/* Registration stamp */}
-          <div className="absolute bottom-3 left-4 font-mono text-[10px] text-white/40 uppercase bg-black/70 px-2 py-0.5 rounded border border-white/10">
+          <div className="absolute bottom-2 left-3 font-mono text-[9px] sm:text-[10px] text-white/50 uppercase bg-black/80 px-2 py-0.5 rounded border border-white/10 max-w-[70%] truncate">
             {photo.filename}
           </div>
         </div>
 
         {/* Right Section: Specimen Story, Reasons & Optics */}
-        <div className="lg:w-5/12 p-6 md:p-8 flex flex-col justify-between overflow-y-auto max-h-[85vh] bg-[#0d0f14]">
+        <div className="lg:w-5/12 p-4 sm:p-6 md:p-8 flex flex-col justify-between overflow-y-visible lg:overflow-y-auto lg:max-h-[85vh] bg-[#0d0f14]">
           <div>
             <div className="flex items-center justify-between text-xs font-mono text-neutral-400 mb-2">
               <span className="bg-neutral-800 px-2.5 py-0.5 rounded text-neutral-300 font-semibold uppercase">
