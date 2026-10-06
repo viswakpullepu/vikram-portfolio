@@ -21,12 +21,25 @@ export const Navigation: React.FC = () => {
 
       {/* Right Controls & Social Links */}
       <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+        {/* Email Direct Contact */}
+        <a
+          href="mailto:Theorygod287@gmail.com"
+          className="hidden sm:flex items-center gap-1.5 text-xs font-mono text-neutral-300 hover:text-white bg-neutral-900/90 hover:bg-neutral-850 px-2.5 sm:px-3 py-1.5 rounded-lg border border-neutral-800 hover:border-amber-500/40 transition-all cursor-pointer"
+          title="Email Theorygod287@gmail.com"
+        >
+          <svg className="w-3.5 h-3.5 text-amber-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+          </svg>
+          <span className="font-semibold text-amber-300">Theorygod287@gmail.com</span>
+        </a>
+
         {/* Instagram Profile Link */}
         <a
           href="https://www.instagram.com/rigzz.iii/"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-2 text-xs font-mono text-neutral-300 hover:text-white bg-neutral-900/90 hover:bg-neutral-850 px-3 py-1.5 rounded-lg border border-neutral-800 hover:border-pink-500/40 transition-all cursor-pointer"
+          className="flex items-center gap-1.5 text-xs font-mono text-neutral-300 hover:text-white bg-neutral-900/90 hover:bg-neutral-850 px-2.5 sm:px-3 py-1.5 rounded-lg border border-neutral-800 hover:border-pink-500/40 transition-all cursor-pointer"
           title="Vikram's Instagram @rigzz.iii"
         >
           <svg className="w-3.5 h-3.5 text-pink-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

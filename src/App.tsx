@@ -76,7 +76,7 @@ export function App() {
                 </p>
               </div>
 
-              {/* Quick Instagram Badge */}
+              {/* Quick Contact Badges (Instagram & Email) */}
               <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 pt-2">
                 <a
                   href="https://www.instagram.com/rigzz.iii/"
@@ -90,6 +90,18 @@ export function App() {
                     <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
                   </svg>
                   <span>Instagram: <strong className="text-pink-300">@rigzz.iii</strong></span>
+                </a>
+
+                <a
+                  href="mailto:Theorygod287@gmail.com"
+                  className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-neutral-900 border border-neutral-800 text-neutral-300 hover:text-white hover:border-amber-500/50 hover:bg-neutral-850 font-mono text-[11px] sm:text-xs transition-all shadow-sm"
+                  title="Direct Inquiries via Email"
+                >
+                  <svg className="w-3.5 h-3.5 text-amber-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                  </svg>
+                  <span>Inquiries: <strong className="text-amber-300">Theorygod287@gmail.com</strong></span>
                 </a>
               </div>
             </div>
@@ -130,13 +142,30 @@ export function App() {
             </p>
           </div>
 
-          <div className="flex items-center gap-6">
+          <div className="flex flex-wrap items-center justify-center md:justify-end gap-5 sm:gap-7">
+            <a
+              href="mailto:Theorygod287@gmail.com"
+              className="text-amber-400 hover:text-amber-300 transition-colors flex items-center gap-1.5 font-mono text-xs"
+              title="Email Inquiries"
+            >
+              <svg className="w-3.5 h-3.5 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+              </svg>
+              <span>Theorygod287@gmail.com</span>
+            </a>
+
             <a
               href="https://www.instagram.com/rigzz.iii/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-pink-400 hover:text-pink-300 transition-colors flex items-center gap-1.5"
             >
+              <svg className="w-3.5 h-3.5 text-pink-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
               <span>Instagram @rigzz.iii</span>
             </a>
           </div>
