@@ -141,12 +141,7 @@ export const UserPhotoModal: React.FC<UserPhotoModalProps> = ({
         {/* Right Section: Specimen Story, Reasons & Optics */}
         <div className="lg:w-5/12 p-4 sm:p-6 md:p-8 flex flex-col justify-between overflow-y-visible lg:overflow-y-auto lg:max-h-[85vh] bg-[#0d0f14]">
           <div>
-            <div className="flex items-center justify-between text-xs font-mono text-neutral-400 mb-2">
-              <span className="bg-neutral-800 px-2.5 py-0.5 rounded text-neutral-300 font-semibold uppercase">
-                {photo.subtitle}
-              </span>
-              <span>{photo.date}</span>
-            </div>
+
 
             <h2 className="text-3xl md:text-4xl font-normal text-white tracking-tight font-curved mb-4 capitalize">
               {photo.title}

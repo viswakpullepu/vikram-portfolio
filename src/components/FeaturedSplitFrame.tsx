@@ -147,15 +147,7 @@ export const FeaturedSplitFrame: React.FC<FeaturedSplitFrameProps> = ({ onSelect
             />
 
             {/* TOP OF LEFT HALF: RESPECTIVE HEADING WITH CURVED PHOTOGRAPHY FONT */}
-            <div className="relative z-10 mb-4 sm:mb-6">
-              <div className="flex items-center justify-between text-xs font-mono text-neutral-400 mb-1.5">
-                <span className="inline-flex items-center gap-2 text-amber-400/90 uppercase tracking-widest text-[11px]">
-                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-                  Plate #{String(currentSpecimen.order).padStart(2, '0')} · {currentSpecimen.subtitle}
-                </span>
-                <span className="text-neutral-500 text-[11px] font-mono">{currentSpecimen.date}</span>
-              </div>
-
+            <div className="relative z-10 mb-3 sm:mb-5">
               {/* HEADING IN ATTRACTIVE CURVED DISPLAY SERIF */}
               <h3 className="font-curved text-3xl sm:text-4xl lg:text-[44px] font-normal text-white tracking-tight leading-tight capitalize">
                 {currentSpecimen.title}
@@ -225,17 +217,7 @@ export const FeaturedSplitFrame: React.FC<FeaturedSplitFrameProps> = ({ onSelect
           <div className="lg:col-span-5 bg-[#0e1015] p-5 sm:p-7 xl:p-9 flex flex-col justify-between relative">
             
             {/* Top of Right Half */}
-            <div>
-              {/* Context Section Label */}
-              <div className="flex items-center justify-between text-xs font-mono text-neutral-400 mb-3 pb-2.5 border-b border-neutral-800/80">
-                <span className="uppercase tracking-widest text-amber-400 font-semibold flex items-center gap-1.5">
-                  <svg className="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                  </svg>
-                  Artist Context & Rationale
-                </span>
-                <span className="text-neutral-500 font-mono">Archive Folio</span>
-              </div>
+            <div className="my-auto">
 
               {/* PRIMARY SPOTLIGHT: "WHY I TOOK THIS PHOTO" */}
               <div className="bg-neutral-900/80 rounded-2xl p-6 sm:p-8 border border-neutral-800/90 shadow-xl relative overflow-hidden my-auto">
