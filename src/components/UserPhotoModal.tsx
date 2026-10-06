@@ -148,12 +148,9 @@ export const UserPhotoModal: React.FC<UserPhotoModalProps> = ({
               <span>{photo.date}</span>
             </div>
 
-            <h2 className="text-3xl md:text-4xl font-normal text-white tracking-tight font-curved mb-1 capitalize">
+            <h2 className="text-3xl md:text-4xl font-normal text-white tracking-tight font-curved mb-4 capitalize">
               {photo.title}
             </h2>
-            <p className="text-xs font-mono text-neutral-400 mb-6">
-              {photo.location}
-            </p>
 
             <div className="space-y-4">
               {/* Why I Took This */}
@@ -167,38 +164,6 @@ export const UserPhotoModal: React.FC<UserPhotoModalProps> = ({
                 <blockquote className="text-amber-100/95 text-lg sm:text-xl font-curved italic font-light leading-relaxed">
                   "{photo.whyITookThis}"
                 </blockquote>
-              </div>
-
-              {/* What Caught My Eye */}
-              <div>
-                <span className="font-mono text-[11px] uppercase tracking-wider text-neutral-400 block mb-1">
-                  What Caught My Eye
-                </span>
-                <p className="text-neutral-300 text-xs sm:text-sm leading-relaxed">
-                  {photo.whatCaughtMyEye || 'Light direction, subject gesture, or candid moment.'}
-                </p>
-              </div>
-
-              {/* Setting / Atmosphere */}
-              <div>
-                <span className="font-mono text-[11px] uppercase tracking-wider text-neutral-400 block mb-1">
-                  Atmosphere & Setting
-                </span>
-                <p className="text-neutral-400 text-xs sm:text-sm leading-relaxed">
-                  {photo.story || 'Ambient noise, time of day, candid environment.'}
-                </p>
-              </div>
-
-              {/* Telemetry */}
-              <div className="grid grid-cols-2 gap-2 text-xs font-mono pt-3 border-t border-neutral-800">
-                <div className="bg-neutral-950 p-2.5 rounded border border-neutral-800">
-                  <span className="text-[10px] text-neutral-500 uppercase block">Camera</span>
-                  <span className="text-neutral-200">{photo.cameraInfo}</span>
-                </div>
-                <div className="bg-neutral-950 p-2.5 rounded border border-neutral-800">
-                  <span className="text-[10px] text-neutral-500 uppercase block">Lens & Optics</span>
-                  <span className="text-neutral-200 truncate block">{photo.lensInfo}</span>
-                </div>
               </div>
             </div>
           </div>

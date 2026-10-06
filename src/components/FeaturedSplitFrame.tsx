@@ -192,7 +192,7 @@ export const FeaturedSplitFrame: React.FC<FeaturedSplitFrameProps> = ({ onSelect
 
               {/* Watermark Archival Registration Code */}
               <div className="absolute bottom-4 left-4 font-mono text-[9px] sm:text-[10px] tracking-widest text-white/60 uppercase bg-black/80 backdrop-blur-md px-2.5 py-1 rounded border border-white/10 pointer-events-none max-w-[80%] truncate">
-                REG #{String(currentSpecimen.order).padStart(2, '0')} · {currentSpecimen.cameraInfo}
+                REG #{String(currentSpecimen.order).padStart(2, '0')} · 35MM ARCHIVE
               </div>
 
               {/* Fullscreen Expand Action Trigger */}
@@ -212,8 +212,8 @@ export const FeaturedSplitFrame: React.FC<FeaturedSplitFrameProps> = ({ onSelect
 
             {/* Bottom Caption Bar */}
             <div className="mt-3 flex items-center justify-between text-[11px] font-mono text-neutral-500 px-1">
-              <span>Location: <strong className="text-neutral-300 font-normal">{currentSpecimen.location}</strong></span>
-              <span>Click image to expand full-bleed</span>
+              <span>Specimen Frame #{String(currentSpecimen.order).padStart(2, '0')}</span>
+              <span>Click photo to view full-bleed</span>
             </div>
 
           </div>
@@ -237,78 +237,22 @@ export const FeaturedSplitFrame: React.FC<FeaturedSplitFrameProps> = ({ onSelect
                 <span className="text-neutral-500 font-mono">Archive Folio</span>
               </div>
 
-              {/* ==================================================== */}
-              {/* PRIMARY SPOTLIGHT: "WHY I TOOK THIS PHOTO"           */}
-              {/* Rendered in Attractive, Curving Photography Font     */}
-              {/* ==================================================== */}
-              <div className="bg-neutral-900/80 rounded-xl p-5 sm:p-6 border border-neutral-800/90 mb-5 shadow-lg relative overflow-hidden">
+              {/* PRIMARY SPOTLIGHT: "WHY I TOOK THIS PHOTO" */}
+              <div className="bg-neutral-900/80 rounded-2xl p-6 sm:p-8 border border-neutral-800/90 shadow-xl relative overflow-hidden my-auto">
                 {/* Gold Accent Indicator Ribbon */}
                 <div className="absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b from-amber-400 via-amber-500 to-amber-600" />
                 
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="font-mono text-[11px] uppercase tracking-wider text-amber-400 font-semibold">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="font-mono text-xs uppercase tracking-wider text-amber-400 font-semibold">
                     Why I Took This Photo
                   </span>
                 </div>
 
                 {/* THE PERSONAL REASON IN THE CURVING PHOTOGRAPHY FONT */}
-                <blockquote className="font-curved italic text-lg sm:text-xl lg:text-[22px] font-light text-amber-100/95 leading-relaxed tracking-wide my-1">
+                <blockquote className="font-curved italic text-xl sm:text-2xl lg:text-3xl font-light text-amber-100/95 leading-relaxed tracking-wide">
                   "{currentSpecimen.whyITookThis}"
                 </blockquote>
               </div>
-
-              {/* SECONDARY DETAILS: "WHAT CAUGHT MY EYE" & "ATMOSPHERE & SETTING" */}
-              <div className="space-y-4 mb-5">
-                <div className="bg-neutral-950/40 p-3.5 rounded-lg border border-neutral-800/50">
-                  <span className="font-mono text-[10px] uppercase tracking-wider text-neutral-400 block mb-1">
-                    What Caught My Eye
-                  </span>
-                  <p className="text-neutral-300 text-xs sm:text-sm leading-relaxed">
-                    {currentSpecimen.whatCaughtMyEye}
-                  </p>
-                </div>
-
-                <div className="bg-neutral-950/40 p-3.5 rounded-lg border border-neutral-800/50">
-                  <span className="font-mono text-[10px] uppercase tracking-wider text-neutral-400 block mb-1">
-                    Atmosphere & Setting
-                  </span>
-                  <p className="text-neutral-400 text-xs sm:text-sm leading-relaxed">
-                    {currentSpecimen.story}
-                  </p>
-                </div>
-              </div>
-
-              {/* TECHNICAL TELEMETRY & PALETTE */}
-              <div className="pt-3 border-t border-neutral-800/80">
-                <div className="grid grid-cols-2 gap-2 text-xs font-mono">
-                  <div className="bg-neutral-950/80 p-2.5 rounded border border-neutral-800/60">
-                    <span className="text-[9px] text-neutral-500 block uppercase">Camera Setup</span>
-                    <span className="text-neutral-200 font-medium truncate block">{currentSpecimen.cameraInfo}</span>
-                  </div>
-                  <div className="bg-neutral-950/80 p-2.5 rounded border border-neutral-800/60">
-                    <span className="text-[9px] text-neutral-500 block uppercase">Optical Parameters</span>
-                    <span className="text-neutral-200 font-medium truncate block" title={currentSpecimen.lensInfo}>
-                      {currentSpecimen.lensInfo}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Color Harmonization Swatches */}
-                <div className="flex items-center gap-2 mt-3">
-                  <span className="font-mono text-[10px] text-neutral-500 uppercase">Palette Tones:</span>
-                  <div className="flex items-center gap-1.5">
-                    {currentSpecimen.palette.map((color, cIdx) => (
-                      <div
-                        key={cIdx}
-                        className="w-3.5 h-3.5 rounded-full border border-white/10 shadow-sm"
-                        style={{ backgroundColor: color }}
-                        title={color}
-                      />
-                    ))}
-                  </div>
-                </div>
-              </div>
-
             </div>
 
             {/* Bottom Controls inside the right frame */}
