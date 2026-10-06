@@ -4,18 +4,9 @@ import { SPLIT_FRAME_SPECIMENS } from './data/splitFrameData';
 import { Navigation } from './components/Navigation';
 import { FeaturedSplitFrame } from './components/FeaturedSplitFrame';
 import { UserPhotoModal } from './components/UserPhotoModal';
-import { ContactModal } from './components/ContactModal';
-import { sound } from './utils/audio';
 
 export function App() {
   const [selectedSpecimen, setSelectedSpecimen] = useState<SplitFrameSpecimen | null>(null);
-  const [isMuted, setIsMuted] = useState<boolean>(sound.getMuted());
-  const [isContactOpen, setIsContactOpen] = useState<boolean>(false);
-
-  const handleToggleMute = () => {
-    const muted = sound.toggleMute();
-    setIsMuted(muted);
-  };
 
   // Next / Prev navigation when inspecting in darkroom modal
   const handleModalNext = () => {
@@ -40,14 +31,7 @@ export function App() {
     <div className="min-h-screen bg-[#08080a] text-neutral-100 flex flex-col font-sans film-grain relative selection:bg-amber-500/30 selection:text-amber-100">
       
       {/* Top Header Navigation */}
-      <Navigation
-        isMuted={isMuted}
-        onToggleMute={handleToggleMute}
-        onContactClick={() => {
-          sound.playFocusTick();
-          setIsContactOpen(true);
-        }}
-      />
+      <Navigation />
 
       {/* Main Photographic Presentation */}
       <main className="flex-1 w-full pb-16">
@@ -117,12 +101,6 @@ export function App() {
         onPrev={handleModalPrev}
       />
 
-      {/* Direct Contact & Commission Modal */}
-      <ContactModal
-        isOpen={isContactOpen}
-        onClose={() => setIsContactOpen(false)}
-      />
-
       {/* Exhibition Colophon Footer */}
       <footer className="w-full border-t border-neutral-900 bg-[#060608] py-8 sm:py-10 px-4 sm:px-6 font-mono text-xs text-neutral-400">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
@@ -142,16 +120,6 @@ export function App() {
             >
               <span>Instagram @rigzz.iii</span>
             </a>
-            <span className="text-neutral-800">·</span>
-            <button
-              onClick={() => {
-                sound.playFocusTick();
-                setIsContactOpen(true);
-              }}
-              className="text-amber-400 hover:text-amber-300 transition-colors cursor-pointer"
-            >
-              Contact / Inquiries
-            </button>
           </div>
         </div>
       </footer>
