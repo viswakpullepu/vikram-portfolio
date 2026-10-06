@@ -122,7 +122,7 @@ export const FeaturedSplitFrame: React.FC<FeaturedSplitFrameProps> = ({ onSelect
       {/* FINE-ART LANDSCAPE PAPER SPREAD                          */}
       {/* Left Half = Heading & Picture | Right Half = Context     */}
       {/* ======================================================== */}
-      <div className="relative rounded-2xl bg-[#0c0d12] border border-neutral-800/90 shadow-[0_20px_60px_rgba(0,0,0,0.85)] ring-1 ring-white/5 overflow-hidden transition-all duration-300">
+      <div className="relative rounded-2xl bg-[#14161d] border border-neutral-700/60 shadow-[0_20px_60px_rgba(0,0,0,0.85)] ring-1 ring-white/10 overflow-hidden transition-all duration-300">
         
         {/* Archival Paper Texture & Delicate Inner Bevel */}
         <div className="absolute inset-0 pointer-events-none border border-white/5 rounded-2xl z-20" />
@@ -136,7 +136,7 @@ export const FeaturedSplitFrame: React.FC<FeaturedSplitFrameProps> = ({ onSelect
           <div 
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
-            className="lg:col-span-7 bg-[#07070a] p-4 sm:p-6 lg:p-8 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-neutral-800/80 group touch-pan-y relative"
+            className="lg:col-span-7 bg-[#181a22] p-4 sm:p-6 lg:p-8 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-neutral-700/60 group touch-pan-y relative"
           >
             {/* Ambient Radial Safelight Accent */}
             <div 
@@ -154,8 +154,8 @@ export const FeaturedSplitFrame: React.FC<FeaturedSplitFrameProps> = ({ onSelect
               </h3>
             </div>
 
-            {/* CENTER / BODY: THE FRAMED PHOTOGRAPH */}
-            <div className="relative w-full flex-1 min-h-[320px] sm:min-h-[440px] lg:min-h-[480px] flex items-center justify-center p-2 sm:p-4 bg-neutral-950/70 rounded-xl border border-neutral-900/90 shadow-inner overflow-hidden">
+            {/* CENTER / BODY: THE FRAMED PHOTOGRAPH ON ARCHIVAL GREY MAT */}
+            <div className="relative w-full flex-1 min-h-[320px] sm:min-h-[440px] lg:min-h-[480px] flex items-center justify-center p-2.5 sm:p-5 bg-[#252832] rounded-xl border border-neutral-700/60 shadow-[inset_0_2px_12px_rgba(0,0,0,0.6)] overflow-hidden">
               
               {/* Corner Framing Reticles */}
               <div className="absolute top-2.5 left-2.5 w-3 h-3 border-t-2 border-l-2 border-amber-500/40 pointer-events-none" />
@@ -210,13 +210,13 @@ export const FeaturedSplitFrame: React.FC<FeaturedSplitFrameProps> = ({ onSelect
           {/* RIGHT HALF: DEDICATED TO THE CONTEXT & RATIONALE         */}
           {/* Top = Context Header | Below = "Why I Took This Photo"   */}
           {/* ======================================================== */}
-          <div className="lg:col-span-5 bg-[#0e1015] p-5 sm:p-7 xl:p-9 flex flex-col justify-between relative">
+          <div className="lg:col-span-5 bg-[#15171e] p-5 sm:p-7 xl:p-9 flex flex-col justify-between relative">
             
             {/* Top of Right Half */}
             <div className="my-auto">
 
               {/* PRIMARY SPOTLIGHT: "WHY I TOOK THIS PHOTO" */}
-              <div className="bg-neutral-900/80 rounded-2xl p-6 sm:p-8 border border-neutral-800/90 shadow-xl relative overflow-hidden my-auto">
+              <div className="bg-[#1c1e27] rounded-2xl p-6 sm:p-8 border border-neutral-700/60 shadow-xl relative overflow-hidden my-auto">
                 {/* Gold Accent Indicator Ribbon */}
                 <div className="absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b from-amber-400 via-amber-500 to-amber-600" />
                 

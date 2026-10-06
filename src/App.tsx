@@ -3,6 +3,7 @@ import type { SplitFrameSpecimen } from './data/splitFrameData';
 import { SPLIT_FRAME_SPECIMENS } from './data/splitFrameData';
 import { Navigation } from './components/Navigation';
 import { FeaturedSplitFrame } from './components/FeaturedSplitFrame';
+import { ColorGallerySection } from './components/ColorGallerySection';
 import { UserPhotoModal } from './components/UserPhotoModal';
 
 export function App() {
@@ -36,40 +37,57 @@ export function App() {
       {/* Main Photographic Presentation */}
       <main className="flex-1 w-full pb-16">
         
-        {/* Prominent Editorial Header Introduction */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-10 pb-6 sm:pb-8 text-center md:text-left flex flex-col md:flex-row md:items-end justify-between border-b border-neutral-900 gap-6">
-          <div className="space-y-3">
-            <div className="flex items-center justify-center md:justify-start gap-2 font-mono text-[11px] sm:text-xs text-neutral-400 uppercase tracking-widest">
-              <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
-              <span>Photographic Archives · Top 10 Specimen Split Frames</span>
-            </div>
+        {/* Prominent Editorial Header Introduction with Vikram's Profile Picture */}
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-10 pb-6 sm:pb-8 border-b border-neutral-900">
+          <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5 sm:gap-7">
             
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-normal text-white font-curved tracking-tight">
-              Vikram
-            </h1>
-
-            <p className="text-neutral-300 text-xs sm:text-sm md:text-base font-sans max-w-2xl font-light leading-relaxed">
-              An unvarnished visual study of fleeting golden angles, street candids, and intimate nocturnes. Formatted into the Top 10 premier specimen split frames pairing visual specimens with personal rationale.
-            </p>
-
-            {/* Quick Instagram Badge */}
-            <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 pt-1">
-              <a
-                href="https://www.instagram.com/rigzz.iii/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-3 sm:px-3.5 py-1.5 rounded-full bg-neutral-900 border border-neutral-800 text-neutral-300 hover:text-white hover:border-pink-500/50 hover:bg-neutral-850 font-mono text-[11px] sm:text-xs transition-all"
-              >
-                <svg className="w-3.5 h-3.5 text-pink-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                </svg>
-                <span>Instagram: <strong className="text-pink-300">@rigzz.iii</strong></span>
-              </a>
+            {/* Vikram's Authentic Profile Portrait */}
+            <div className="relative flex-shrink-0 group">
+              <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full p-1 bg-gradient-to-tr from-amber-500/50 via-neutral-700 to-pink-500/40 shadow-2xl">
+                <img
+                  src="photos/vikram_profile.jpg"
+                  alt="Vikram - Photographer"
+                  className="w-full h-full object-cover rounded-full"
+                />
+              </div>
+              <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-neutral-900 border border-neutral-700 flex items-center justify-center text-xs shadow-md" title="Photographer">
+                📷
+              </div>
             </div>
-          </div>
 
+            <div className="space-y-2.5 text-center sm:text-left flex-1">
+              <div className="flex items-center justify-center sm:justify-start gap-2 font-mono text-[11px] sm:text-xs text-neutral-400 uppercase tracking-widest">
+                <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+                <span>Photographer & Visual Archives</span>
+              </div>
+              
+              <h1 className="text-4xl sm:text-6xl lg:text-7xl font-normal text-white font-curved tracking-tight">
+                Vikram
+              </h1>
+
+              <p className="text-neutral-300 text-xs sm:text-sm md:text-base font-sans max-w-2xl font-light leading-relaxed">
+                An unvarnished visual study of fleeting golden angles, street candids, and intimate nocturnes. Formatted into the Top 10 premier specimen split frames pairing visual specimens with personal rationale.
+              </p>
+
+              {/* Quick Instagram Badge */}
+              <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 pt-1">
+                <a
+                  href="https://www.instagram.com/rigzz.iii/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-3 sm:px-3.5 py-1.5 rounded-full bg-neutral-900 border border-neutral-800 text-neutral-300 hover:text-white hover:border-pink-500/50 hover:bg-neutral-850 font-mono text-[11px] sm:text-xs transition-all"
+                >
+                  <svg className="w-3.5 h-3.5 text-pink-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                  </svg>
+                  <span>Instagram: <strong className="text-pink-300">@rigzz.iii</strong></span>
+                </a>
+              </div>
+            </div>
+
+          </div>
         </section>
 
         {/* REFINED SPLIT FRAME ARCHIVE EXHIBITION */}
@@ -78,6 +96,11 @@ export function App() {
           <FeaturedSplitFrame
             onSelectPhotoModal={(specimen) => setSelectedSpecimen(specimen)}
           />
+        </div>
+
+        {/* CURATED COLORFUL WORKS GALLERY SECTION (LOWER SECTION) */}
+        <div id="color-gallery" className="scroll-mt-20">
+          <ColorGallerySection />
         </div>
 
       </main>
